@@ -55,7 +55,7 @@
                     <div class="teks-about" style="padding-top: 20px; padding-bottom: 20px;">
                         <p class="poppins-regular teks-about-1" style="font-size: 20px; text-align: justify;"><span
                                 class="tab"></span>Warmindo
-                            adalah singkatan dari warung makan Indomie. Intinya, warung ini menyajikan menu mie instan
+                            adalah singkatan dari warung makan Indomie. Intinya, warung ini menyajikan menu mie instan
                             Indomie kepada pelanggannya.
                             Usaha ini sudah banyak ditemukan di berbagai wilayah di seluruh Indonesia, khususnya di area
                             perkotaan yang warganya memiliki gaya hidup serba praktis.</p>

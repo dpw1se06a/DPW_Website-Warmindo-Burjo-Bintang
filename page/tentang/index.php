@@ -1,63 +1,5 @@
-<!doctype html>
-<html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tentang | Warmindo Burjo Bintang</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-    <!-- Navbar -->
-    <div class="logo-navbar">
-        <a href="../">
-            <img src="../assets/logo/logo.png" alt="...">
-        </a>
-    </div>
-    <nav class="navbar navbar-expand-lg red-nav poppins-semibold">
-        <div class="container-fluid" style="justify-content: flex-end;">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation" style="background-color: #fff;">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse flex-end margin-all" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="../index.html">Home</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" aria-current="page" href="/Tentang/">Tentang</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/Menu/">menu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/Pesan/">Pesan</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/Berita/">Berita</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/Ulasan/">Ulasan</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/Fasilitas/">Fasilitas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/Kontak/">Kontak</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <!-- navbar start -->
+<?php include '_component/header.php'; ?>
 
     <!-- carousel -->
     <div id="carouselExample" class="carousel slide padding-bawah">
@@ -150,15 +92,5 @@
         </div>
     </div>
     <!-- end content -->
-    <footer class="footer">
-        <div class="footer-content">
-            <p>Copyright &copy; 2024 Burjo Bintang | All Right Reserved</p>
-        </div>
-    </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-</body>
-
-</html>
+<?php include '_component/footer.php'; ?>
