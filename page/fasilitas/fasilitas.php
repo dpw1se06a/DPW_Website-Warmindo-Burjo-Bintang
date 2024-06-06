@@ -1,6 +1,7 @@
-<?php include '_component/header_1.php'; ?>
-<link rel="stylesheet" href="../style.css">
-<link rel="stylesheet" href="fasilitas/style.css">
+<?php
+session_start();
+?>
+<?php include '_component/header.php'; ?>
 <?php include '_component/header_2.php'; ?>
 <?php include '../config/koneksi.php'; ?>
 <!-- content home -->
