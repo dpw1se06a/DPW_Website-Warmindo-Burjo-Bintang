@@ -1,17 +1,26 @@
 <?php
 
+$mod = isset($_GET['mod']) ? $_GET['mod'] : '';
+$action = isset($_GET['action']) ? $_GET['action'] : '';
+
 if($_GET['mod'] == "dashboard"){
     include"dashboard/dashboard.php";
-} elseif($_GET['mod'] == "tentang"){
+}  elseif($_GET['mod'] == "user"){
+    include "dashboard/user.php";
+} elseif($_GET['mod'] == "data-user"){
+    include "dashboard/data-user.php";
+} 
+elseif($_GET['mod'] == "tentang"){
     include "tentang/tentang.php";
 } elseif($_GET['mod'] == "menu"){
     include "menu/menu.php";
 } elseif($_GET['mod'] == "pesan"){
     include "pesan/pesan.php";
+} elseif($_GET['mod'] == "konfirmasi-pesan"){
+    include "pesan/konfirmasi-pesan.php";
 } elseif($_GET['mod'] == "berita"){
     include "berita/berita.php";
 } elseif($_GET['mod'] == "ulasan"){
-    include "ulasan/ulasan.php";
     if ($action == "tambah") {
         include "ulasan/tambah.php";
     } elseif ($action == "edit") {
@@ -22,7 +31,6 @@ if($_GET['mod'] == "dashboard"){
         include "ulasan/datatabel.php";
     }
 } elseif($_GET['mod'] == "fasilitas"){
-    include "fasilitas/fasilitas.php";
     if ($action == "tambah") {
         include "fasilitas/tambah.php";
     } elseif ($action == "edit") {
