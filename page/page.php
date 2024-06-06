@@ -5,7 +5,7 @@ if($_GET['mod'] == "home"){
 } elseif($_GET['mod'] == "berita"){
     include "berita/index.php";
 } elseif($_GET['mod'] == "fasilitas"){
-    include "fasilitas/index.php";
+    include "fasilitas/fasilitas.php";
 } elseif($_GET['mod'] == "kontak"){
     include "kontak/index.php";
 } elseif($_GET['mod'] == "menu"){
