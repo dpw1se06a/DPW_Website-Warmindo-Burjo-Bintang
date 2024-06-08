@@ -1,7 +1,5 @@
-<?php include '_component/header_1.php'; ?>
-<link rel="stylesheet" href="../style.css">
-<link rel="stylesheet" href="log-reg/style.css">
-<?php include '_component/header_2.php'; ?>
+<?php include '_component/header.php'; ?>
+<?php include "../config/connect.php"; ?>
 <!-- content home -->
 <div class="content">
     <div class="container background-content" style="width: 50%">

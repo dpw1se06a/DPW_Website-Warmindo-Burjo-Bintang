@@ -1,4 +1,14 @@
+<?php
+session_start();
+?>
 <?php include '_component/header.php'; ?>
+<?php include "../config/connect.php"; ?>
+<?php
+    
+    // Assuming you store the user's email in the session after login
+    $userName = isset($_SESSION['nama']) ? $_SESSION['nama'] : null;
+    $userID = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+    ?>
     <!-- carousel -->
     <div id="carouselExample" class="carousel slide">
         <div class="carousel-inner">
@@ -51,6 +61,9 @@
                 <div class="col-md-6 isi-about">
                     <div class="judul-about">
                         <h1 class="lobster-regular judul-about-1">Tentang kami</h1>
+                        <?php if ($userName) : ?>
+                    <span class="nav-link">Logged in as: <?php echo htmlspecialchars($userName); ?></span>
+                    <?php endif; ?>
                     </div>
                     <div class="teks-about" style="padding-top: 20px; padding-bottom: 20px;">
                         <p class="poppins-regular teks-about-1" style="font-size: 20px; text-align: justify;"><span
