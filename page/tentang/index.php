@@ -30,24 +30,28 @@
         <div class="container background-content">
             <!-- about -->
             <div class="about container row">
-                <div class="col-md-6 img-about">
-                    <div class="row">
-                        <div class="item-about col-md-6">
-                            <img src="https://placehold.co/200x200" alt="...">
-                        </div>
-                        <div class="item-about col-md-6">
-                            <img src="https://placehold.co/200x200" alt="...">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="item-about col-md-6">
-                            <img src="https://placehold.co/200x200" alt="...">
-                        </div>
-                        <div class="item-about col-md-6">
-                            <img src="https://placehold.co/200x200" alt="...">
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-6 img-about">
+    <div class="row">
+        <?php
+        include '../config/koneksi.php';
+
+        $sql = "SELECT id_tentang, gambar FROM tentang";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "<div class='item-about col-md-6'>
+                        <img src='" . $row["gambar"] . "' alt='...' class='img-fluid'>
+                      </div>";
+            }
+        } else {
+            echo "0 results";
+        }
+        $conn->close();
+        ?>
+    </div>
+</div>
+
                 <div class="col-md-6 isi-about">
                     <div class="judul-about">
                         <h1 class="lobster-regular judul-about-1">Tentang kami</h1>
@@ -55,7 +59,7 @@
                     <div class="teks-about" style="padding-top: 20px; padding-bottom: 20px;">
                         <p class="poppins-regular teks-about-1" style="font-size: 20px; text-align: justify;"><span
                                 class="tab"></span>Warmindo
-                            adalahsingkatan dari warung makan Indomie. Intinya, warung ini menyajikan menu mie instan
+                            adalah singkatan dari warung makan Indomie. Intinya, warung ini menyajikan menu mie instan
                             Indomie kepada pelanggannya.
                             Usaha ini sudah banyak ditemukan di berbagai wilayah di seluruh Indonesia, khususnya di area
                             perkotaan yang warganya memiliki gaya hidup serba praktis.</p>
