@@ -44,4 +44,18 @@ elseif($_GET['mod'] == "tentang"){
     include "kontak/kontak.php";
 }
 
+switch ($mod) {
+    case 'updateTentang':
+        include 'tentang/edit/edit.php';
+        break;
+    case 'addTentang':
+        include 'tentang/edit/tambah.php';
+        break;
+    case 'deleteTentang':
+        include 'tentang/edit/hapus.php';
+        break;
+}
+
+
+
 ?>
