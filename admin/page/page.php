@@ -54,6 +54,16 @@ switch ($mod) {
     case 'deleteTentang':
         include 'tentang/edit/hapus.php';
         break;
+
+        case 'updateMenu':
+            include 'Menu/edit/edit.php';
+            break;
+        case 'addMenu':
+            include 'Menu/edit/tambah.php';
+            break;
+        case 'deleteMenu':
+            include 'Menu/edit/hapus.php';
+            break;
 }
 
 
