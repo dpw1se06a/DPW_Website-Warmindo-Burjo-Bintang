@@ -18,8 +18,12 @@ elseif($_GET['mod'] == "tentang"){
     include "pesan/pesan.php";
 } elseif($_GET['mod'] == "konfirmasi-pesan"){
     include "pesan/konfirmasi-pesan.php";
+} elseif($_GET['mod'] == "keranjang"){
+    include "pesan/keranjang.php";
 } elseif($_GET['mod'] == "berita"){
     include "berita/berita.php";
+} elseif($_GET['mod'] == "logout"){
+    include "logout/logout.php";
 } elseif($_GET['mod'] == "ulasan"){
     if ($action == "tambah") {
         include "ulasan/tambah.php";
@@ -65,7 +69,5 @@ switch ($mod) {
             include 'Menu/edit/hapus.php';
             break;
 }
-
-
 
 ?>

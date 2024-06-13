@@ -1,58 +1,22 @@
-<?php include '_component/header.php'; ?>
-<?php include "../config/connect.php"; ?>
-<!-- content home -->
-<div class="content">
-    <div class="container background-content" style="width: 50%">
-        <!-- menu -->
-        <!-- makanan -->
-        <div class="judul text-center">
-            <h1 class="lobster-regular" style="font-size: 60px">Register</h1>
-        </div>
-        <?php
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $nama = $_POST['nama'];
-            $email = $_POST['email'];
-            $no_hp = $_POST['no_hp'];
-            $password = $_POST['password'];
-            $confirm_password = $_POST['confirm_password'];
+<?php
+if (version_compare(PHP_VERSION, '5.3.7', '<')) {
+    exit("Sorry, Simple PHP Login does not run on a PHP version smaller than 5.3.7 !");
+} else if (version_compare(PHP_VERSION, '5.5.0', '<')) {
+    // if you are using PHP 5.3 or PHP 5.4 you have to include the password_api_compatibility_library.php
+    // (this library adds the PHP 5.5 password hashing functions to older versions of PHP)
+    require_once("../libraries/password_compatibility_library.php");
+}
 
-            if ($password !== $confirm_password) {
-                echo "<div class='alert alert-danger'>Password dan konfirmasi password tidak cocok.</div>";
-            } else {
-                // Memindahkan ke halaman proses jika password cocok
-                header("Location: log-reg/proses-register.php?nama=$nama&email=$email&no_hp=$no_hp&password=$password");
-                exit();
-            }
-        }
-        ?>
-        <div class="register">
-            <form action="page.php?mod=register" method="POST">
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Nama</label>
-                <input type="text" class="form-control" aria-describedby="emailHelp" name="nama" required>
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" required>
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">No Handphone</label>
-                <input type="text" class="form-control" name="no_hp" required>
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" name="password" required>
-            </div>
-            <div class="mb-5">
-                <label for="exampleInputPassword1" class="form-label">Konfirmasi Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" name="confirm_password" required>
-            </div>
-            <button type="submit" class="btn btn-danger">Submit</button>
-        </form>
-        </div>
 
-    </div>
-</div>
+// include the configs / constants for the database connection
+require_once("../config/db.php");
 
-<!-- end content -->
-<?php include '_component/footer.php'; ?>
+// load the registration class
+require_once("../classes/Registration.php");
+
+// create the registration object. when this object is created, it will do all registration stuff automatically
+// so this single line handles the entire registration process.
+$registration = new Registration();
+
+// show the register view (with the registration form, and messages/errors)
+include("log-reg/view-register.php");

@@ -279,4 +279,13 @@ body {
     left: 0;
     bottom: 0;
     width: 100%;
+    position: static;
+}
+
+.bg-kuning {
+    background-color: #FFED9E;
+}
+
+.text-merah {
+    color: #ED1B24;
 }
