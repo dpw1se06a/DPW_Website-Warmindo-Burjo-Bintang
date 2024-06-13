@@ -1,4 +1,16 @@
 <?php
+session_start();
+include '../config/connect.php';
+$user_id = $_SESSION['user_id'];
+// mendapatkan data role untuk user yang sedang login
+$query = "SELECT * FROM user JOIN role ON user.role_id = role.role_id WHERE user_id = '$user_id'";
+$datas = $conn->query($query);
+$data = $datas->fetch_assoc();
+// jika nama role bukan admin atau bukan penjual maka di alihkan ke ../index.php
+if ($data['name'] != 'admin' && $data['name'] != 'penjual') {
+header("Location: ../index.php");
+exit();
+}
 
 $mod = isset($_GET['mod']) ? $_GET['mod'] : '';
 $action = isset($_GET['action']) ? $_GET['action'] : '';
@@ -9,8 +21,7 @@ if($_GET['mod'] == "dashboard"){
     include "dashboard/user.php";
 } elseif($_GET['mod'] == "data-user"){
     include "dashboard/data-user.php";
-} 
-elseif($_GET['mod'] == "tentang"){
+} elseif($_GET['mod'] == "tentang"){
     include "tentang/tentang.php";
 } elseif($_GET['mod'] == "menu"){
     include "menu/menu.php";

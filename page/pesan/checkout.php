@@ -1,8 +1,10 @@
 <?php include '_component/header.php'; ?>
 <?php include "../config/connect.php"; ?>
 <?php
-$user_id = $_SESSION['user_id'];
-?>
+                if ($login->isUserLoggedIn() != true) {
+                header("Location: page.php?mod=pesan");
+                }
+            ?>
 <style>
 /* Style for the file input */
 .upload-form-container input[type="file"] {

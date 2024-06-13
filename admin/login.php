@@ -18,14 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Login berhasil, simpan data pengguna ke dalam session
         $user = $result->fetch_assoc();
         
-        if (($email == 'admin@gmail.com' AND $password == '123') OR ($email == 'burjobintang@gmail.com' AND $password == '123')){
-            // Login berhasil, redirect ke halaman utama
-            header("Location: page/page.php?mod=dashboard");
-            exit();
-        }
-        else{
-            header("Location: index.php");
-        }
+        // Ubah X, Y, Z dengan session agar menyimpan data yang tadi berhasil login kedalam session
+        $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['email'] = $user['email'];
+        $_SESSION['nama_lengkap'] = $user['nama_lengkap'];
+        header("Location: page/page.php?mod=dashboard");
+        exit();
     } else {
         echo "Login gagal. Silakan cek kembali email dan password Anda.";
     }

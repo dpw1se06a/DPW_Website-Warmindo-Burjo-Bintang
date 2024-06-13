@@ -2,7 +2,6 @@
 <?php include "../config/connect.php"; ?>
 <?php
 $userName = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-$user_id = $_SESSION['user_id'];
 ?>
 <?php
 function insertionSort(&$array, $key) {
