@@ -1,12 +1,12 @@
 <?php
 session_start();
 $user_id = $_SESSION['user_id'];
-include '../../../config/connect.php';
+include '../config/connect.php';
 
 function uploadImage($user_id) {
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["file"])) {
         echo $user_id;
-        $targetDir = "../../../uploads/bukti_prmbayaran/";
+        $targetDir = "../uploads/bukti_pembayaran/";
         $targetFile = $targetDir . basename($_FILES["file"]["name"]);
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
@@ -52,6 +52,7 @@ function uploadImage($user_id) {
                         $sql = "UPDATE keranjang SET status = 'dibayar' WHERE id_keranjang IN ($ids_string)";
                         if ($conn->query($sql) === TRUE) {
                             echo "Record updated successfully";
+                            header("Location: page.php?mod=pesan");
                         } else {
                             echo "Error updating record: " . $conn->error;
                         }
@@ -70,7 +71,7 @@ function uploadImage($user_id) {
     }
 }
 uploadImage($user_id);
-echo "<br><a href='../../page.php?mod=pesan'>Kembali ke halaman utama</a>";
+echo "<br><a href='page.php?mod=pesan'>Kembali ke halaman utama</a>";
 
 $conn->close();
 ?>

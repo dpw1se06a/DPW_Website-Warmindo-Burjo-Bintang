@@ -110,7 +110,7 @@ $user_id = $_SESSION['user_id'];
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body upload-form-container">
-                                    <form action="pesan/pesanan/upload.php" method="post" enctype="multipart/form-data">
+                                    <form action="page.php?mod=upload" method="post" enctype="multipart/form-data">
                                         <div class="modal-body">
                                             <input type="file" name="file">
                                             <?php foreach($array_keranjang   as $id): ?>

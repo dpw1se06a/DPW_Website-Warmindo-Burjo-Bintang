@@ -30,16 +30,20 @@ elseif($_GET['mod'] == "pesan"){
     include "pesan/addToChart.php";
 } elseif($_GET['mod'] == "editPesanan"){
     include "pesan/pesanan/edit.php";
-}  elseif($_GET['mod'] == "checkout"){
+} elseif($_GET['mod'] == "checkout"){
     include "pesan/checkout.php";
-} 
+} elseif($_GET['mod'] == "upload"){
+    include "pesan/pesanan/upload.php";
+}
 // tentang
 elseif($_GET['mod'] == "tentang"){
     include "tentang/index.php";
-} 
+}
 // ulasan
 elseif($_GET['mod'] == "ulasan"){
     include "ulasan/index.php";
+} elseif($_GET['mod'] == "get_review"){
+    include "ulasan/get_review.php";
 }  
 // login register
 elseif($_GET['mod'] == "login"){
