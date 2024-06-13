@@ -2,8 +2,7 @@
 session_start();
 ?>
 <?php include '_component/header.php'; ?>
-<?php include '_component/header_2.php'; ?>
-<?php include '../config/koneksi.php'; ?>
+<?php include "../config/connect.php"; ?>
 <!-- content home -->
 <div class="content">
     <div class="container background-content">

@@ -1,5 +1,5 @@
 <?php include '_component/header.php';?>
-<?php include '../../config/koneksi.php';?>
+<?php include '../../config/connect.php';?>
 
 <body class="hold-transition sidebar-mini">
     <?php include '_component/wrapper.php'; ?>

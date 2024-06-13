@@ -11,7 +11,7 @@ if (file_exists($header_file)) {
 $servername = "localhost"; // Ganti dengan nama server Anda
 $username = "root"; // Ganti dengan username database Anda
 $password = ""; // Ganti dengan password database Anda
-$dbname = "reviews"; // Ganti dengan nama database Anda
+$dbname = "project"; // Ganti dengan nama database Anda
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Cek koneksi

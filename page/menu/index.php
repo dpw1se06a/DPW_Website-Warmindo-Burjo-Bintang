@@ -4,10 +4,6 @@
 
 <!--  -->
 
-<style>
-    .judul-about-1: d
-</style>
-
 <!-- menu card -->
 <div class="content ">
 <div class="container menu-wrapper mt-30 text-center ">
@@ -17,7 +13,7 @@
     </div>
     <div class="row">
         <?php
-        include '../config/koneksi.php';
+        include '../config/connect.php';
         $sql = "SELECT * FROM cards";
         $result = mysqli_query($conn, $sql);
 

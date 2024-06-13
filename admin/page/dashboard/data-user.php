@@ -43,7 +43,7 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    include '../config/koneksi.php';
+                                    include '../config/connect.php';
                                     // using SQL query to display user data
                                     $query = "SELECT * FROM user";
                                     $datas = $conn->query($query);

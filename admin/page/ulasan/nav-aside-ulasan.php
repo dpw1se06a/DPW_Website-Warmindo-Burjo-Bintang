@@ -14,18 +14,6 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="page.php?mod=ulasan&action=edit" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Edit ulasan</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="page.php?mod=ulasan&action=delete" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Delete ulasan</p>
-            </a>
-        </li>
-        <li class="nav-item">
             <a href="page.php?mod=ulasan&action=data" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Data Tabel</p>
