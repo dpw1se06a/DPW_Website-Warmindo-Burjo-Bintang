@@ -1,10 +1,15 @@
 <?php include '_component/header.php'; ?>
 <?php include "../config/connect.php"; ?>
 <?php
-                if ($login->isUserLoggedIn() != true) {
-                header("Location: page.php?mod=pesan");
-                }
-            ?>
+// ... ask if we are logged in here:
+if ($login->isUserLoggedIn() == true) {
+} else {
+    // the user is not logged in. you can do whatever you want here.
+    // for demonstration purposes, we simply show the "you are not logged in" view.
+    header("location:page.php?mod=menu");
+}
+$user_id = $_SESSION['user_id'];
+?>
 <style>
 /* Style for the file input */
 .upload-form-container input[type="file"] {
@@ -55,32 +60,52 @@
         WHERE 
             k.user_id =" . $user_id . " AND status = 'checkout'";
         $dataUser = $conn->query($sqlUser);
-        $dataKeranjang = $conn->query($sqlKeranjang);
+        $result = $conn->query($sqlKeranjang);
+        $length_keranjang = 0;
+        if ($result) {
+            $num_rows = $result->num_rows;
+            if ($num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $length_keranjang++;
+                    }
+                } 
+            }
         foreach($dataUser as $dUser):
             $nama = $dUser['nama'];
             $no_hp = $dUser['no_hp'];
         ?>
+        <?php endforeach ?>
         <div class="container background-content-white">
             <div class="judul-checkout text-center lobster-regular">
                 <h1>Checkout</h1>
             </div>
             <div class="content-checkout">
                 <div class="daftar-pesanan">
+                    <?php
+                    if ($length_keranjang > 0){
+                    ?>
                     <h5>Daftar pesanan atas nama <?php echo $nama ?>, No HP <?php echo $no_hp ?>:</h5>
-                    <?php endforeach ?>
                     <?php 
                     $number = 1;
                     $array_keranjang = [];
-                    foreach($dataKeranjang as $row):
-                    $array_keranjang[] = $row['id_keranjang'];
-                    $total_harga = $row['jumlah'] * $row['harga'];
-					echo "Pesanan ". $number;
-					echo "<li>" . $row['nama'] . "</li>";
-					echo "<li>" . $row['jumlah'] . "</li>";
-					echo "<li>Rp" . $total_harga . "</li>";
-					echo "<br>";
-					$number++;
-					endforeach;
+                        foreach($result as $row):
+                        $array_keranjang[] = $row['id_keranjang'];
+                        $total_harga = $row['jumlah'] * $row['harga'];
+					    echo "Pesanan ". $number;
+					    echo "<li>" . $row['nama'] . "</li>";
+					    echo "<li>" . $row['jumlah'] . "</li>";
+					    echo "<li>Rp" . $total_harga . "</li>";
+					    echo "<br>";
+					    $number++;
+					    endforeach;
+                ?>
+                <?php
+                } else {
+                    ?>
+                    <h5>Anda belum melakukan checkout. Apakah anda ingin memesan makanan?</h5>
+                    <a href="page.php?mod=pesan" class="btn btn-danger" style="width: 70px;">Ya</a>
+                    <?php
+                    }
                 ?>
                 </div>
                 <div class="row Qris" style="display:flex; justify-content:center;">
@@ -133,7 +158,6 @@
             </div>
         </div>
     </div>
-
 </div>
 <script src="pesan/script.js"></script>
 

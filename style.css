@@ -53,10 +53,7 @@ body {
 }
 
 /* Padding for content to avoid overlap with fixed navbar */
-.content {
-    padding-top: 80px;
-    /* Adjust according to the height of the navbar */
-}
+
 
 /* Adjusting for mobile screens */
 @media (max-width: 992px) {
@@ -68,10 +65,9 @@ body {
         min-height: 100px;
         width: 100%;
     }
-
     .judul-about-1 {
         font-size: 40px;
-        width: 230px;
+        width: 130px;
     }
 
     .logo-navbar img {
@@ -118,6 +114,7 @@ body {
         font-size: 30px;
         width: auto;
     }
+    
 }
 
 .navbar-nav li.nav-item.active {
@@ -172,6 +169,11 @@ body {
 .judul-about-1 {
     border-bottom: 4px solid #000;
     width: 230px;
+}
+
+.judul-about-2 {
+    border-bottom: 4px solid #000;
+    width: 170px;
 }
 
 .background-content {

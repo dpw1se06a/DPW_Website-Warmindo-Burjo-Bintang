@@ -1,99 +1,221 @@
 <?php include '_component/header.php'; ?>
-
+<?php include "../config/connect.php"; ?>
+<?php
+$userName = isset($_SESSION['nama']) ? $_SESSION['nama'] : null;
+include "../functions/sorting.php";
+?>
 <!-- carousel -->
-<div id="carouselExample" class="carousel slide padding-bawah">
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="https://placehold.co/600x400" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-            <img src="https://placehold.co/600x400" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-            <img src="https://placehold.co/600x400" class="d-block w-100" alt="...">
-        </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
 <!-- carousel end -->
+<style>
+.content {
+    margin-top: 120px;
+}
 
+.judul-about1 {
+    margin-left: 39px;
+}
+
+.row-about {
+    display: flex;
+    justify-content: center;
+}
+
+.text-about {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 40px;
+}
+
+@media (max-width: 992px) {
+    .text-about {
+        padding-top: 0px;
+        padding-bottom: 0px;
+        padding-left: 20px;
+    }
+}
+</style>
 <!-- content home -->
 <div class="content">
     <div class="container background-content">
         <!-- about -->
         <div class="about container row">
             <div class="col-md-6 img-about">
+                <?php
+                                                        $sql = "SELECT * FROM img_tentang WHERE kategori = 'tentang kami'";
+                                                        $q = mysqli_query($conn, $sql);
+                                                        $data = [];
+                                                        while ($row = mysqli_fetch_array($q)) {
+                                                            $data[] = $row;
+                                                        }
+                                                        ?>
                 <div class="row">
                     <?php
-        include '../config/connect.php';
-
-        $sql = "SELECT id_tentang, gambar FROM tentang";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                echo "<div class='item-about col-md-6'>
-                        <img src='" . $row["gambar"] . "' alt='...' class='img-fluid'>
-                      </div>";
-            }
-        } else {
-            echo "0 results";
-        }
-        $conn->close();
-        ?>
+                    $number = 0;
+                    foreach ($data as $row):
+                        ?>
+                    <div class="item-about col-md-6">
+                        <img src="../uploads/galeri/<?php echo $row['gambar'];?>" alt="..."
+                            style="width: 200px; height: 200px">
+                    </div>
+                    <?php 
+                    $number++;
+                    if ($number == 2) break;
+                    endforeach
+                    ?>
+                </div>
+                <div class="row">
+                    <?php
+                    $number = 0;
+                    foreach ($data as $row):
+                        if ($number > 1){
+                        ?>
+                    <div class="item-about col-md-6">
+                        <img src="../uploads/galeri/<?php echo $row['gambar'];?>" alt="..."
+                            style="width: 200px; height: 200px">
+                    </div>
+                    <?php 
+                        }
+                    $number++;
+                    if ($number == 5) break;
+                    endforeach
+                    ?>
                 </div>
             </div>
-
             <div class="col-md-6 isi-about">
                 <div class="judul-about">
                     <h1 class="lobster-regular judul-about-1">Tentang kami</h1>
                 </div>
                 <div class="teks-about" style="padding-top: 20px; padding-bottom: 20px;">
+                    <?php
+                                                        $sql = "SELECT * FROM teks_tentang WHERE kategori = 'tentang kami'";
+                                                        $q = mysqli_query($conn, $sql);
+                                                        $data = [];
+                                                        while ($row = mysqli_fetch_array($q)) {
+                                                            $data[] = $row;
+                                                        }
+                                                        foreach ($data as $row):
+                                                        ?>
                     <p class="poppins-regular teks-about-1" style="font-size: 20px; text-align: justify;"><span
-                            class="tab"></span>Warmindo
-                        adalah singkatan dari warung makan Indomie. Intinya, warung ini menyajikan menu mie instan
-                        Indomie kepada pelanggannya.
-                        Usaha ini sudah banyak ditemukan di berbagai wilayah di seluruh Indonesia, khususnya di area
-                        perkotaan yang warganya memiliki gaya hidup serba praktis.</p>
-                </div>
-                <div class="button-about">
-                    <a href="#"><button class="btn-selengkapnya poppins-regular">Kenal lebih jauh</button></a>
+                            class="tab"></span><?php echo $row['teks'] ?></p>
+                    <?php endforeach ?>
                 </div>
             </div>
         </div>
-        <!-- end about -->
-
-        <!-- menu start -->
-        <div class="menu-dashboard container">
-            <div class="menu-dashboard-title">
-                <img src="assets/wallpaper/menu-vector.png" alt="">
-            </div>
-            <div class="menu-dashboard-content">
-                <div class="menu-dashboard-1 padding-bawah">
-                    <div class="isi-menu col-md-6">
-                        <img class="img-menu" src="assets/menu/breakfast-cafe-menu.png" alt="...">
-                    </div>
-                    <div class="isi-menu col-md-6">
-                        <img class="img-menu" src="assets/menu/breakfast-cafe-menu.png" alt="...">
-                    </div>
+        <div class="about2 row">
+            <div class="col-md-6">
+                <div class="judul-about1">
+                    <h1 class="lobster-regular judul-about-2">Visi kami</h1>
                 </div>
-                <div class="menu-dashboard-2 padding-bawah">
-                    <div class="button-about">
-                        <a href="#"><button class="btn-selengkapnya-menu poppins-regular">Kenal lebih jauh</button></a>
+                <div class="text-about">
+                    <?php
+                                                        $sql = "SELECT * FROM teks_tentang WHERE kategori = 'tentang kami'";
+                                                        $q = mysqli_query($conn, $sql);
+                                                        $data = [];
+                                                        while ($row = mysqli_fetch_array($q)) {
+                                                            $data[] = $row;
+                                                        }
+                                                        foreach ($data as $row):
+                                                        ?>
+                    <p class="poppins-regular teks-about-1" style="font-size: 20px; text-align: justify;"><span
+                            class="tab"></span><?php echo $row['teks'] ?></p>
+                    <?php endforeach ?>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding: 40px;">
+                <div class="row ">
+                    <div class="row-about" style="flex-wrap: wrap;">
+                        <?php
+                                                        $sql = "SELECT * FROM img_tentang WHERE kategori = 'misi kami'";
+                                                        $q = mysqli_query($conn, $sql);
+                                                        $data = [];
+                                                        while ($row = mysqli_fetch_array($q)) {
+                                                            $data[] = $row;
+                                                        }
+                                                        ?>
+                        <div class="row">
+                            <?php
+                    $number = 0;
+                    foreach ($data as $row):
+                        ?>
+                            <div class="item-about col-md-6">
+                                <img src="../uploads/galeri/<?php echo $row['gambar'];?>" alt="..."
+                                    style="width: 200px; height: 200px">
+                            </div>
+                            <?php 
+                    $number++;
+                    if ($number == 2) break;
+                    endforeach
+                    ?>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- menu end -->
+        <div class="about container row">
+            <div class="col-md-6 img-about">
+                <?php
+                                                        $sql = "SELECT * FROM img_tentang WHERE kategori = 'produk kami'";
+                                                        $q = mysqli_query($conn, $sql);
+                                                        $data = [];
+                                                        while ($row = mysqli_fetch_array($q)) {
+                                                            $data[] = $row;
+                                                        }
+                                                        ?>
+                <div class="row">
+                    <?php
+                    $number = 0;
+                    foreach ($data as $row):
+                        ?>
+                    <div class="item-about col-md-6">
+                        <img src="../uploads/galeri/<?php echo $row['gambar'];?>" alt="..."
+                            style="width: 200px; height: 200px">
+                    </div>
+                    <?php 
+                    $number++;
+                    if ($number == 2) break;
+                    endforeach
+                    ?>
+                </div>
+                <div class="row">
+                    <?php
+                    $number = 0;
+                    foreach ($data as $row):
+                        if ($number > 1){
+                        ?>
+                    <div class="item-about col-md-6">
+                        <img src="../uploads/galeri/<?php echo $row['gambar'];?>" alt="..."
+                            style="width: 200px; height: 200px">
+                    </div>
+                    <?php 
+                        }
+                    $number++;
+                    if ($number == 5) break;
+                    endforeach
+                    ?>
+                </div>
+            </div>
+            <div class="col-md-6 isi-about">
+                <div class="judul-about">
+                    <h1 class="lobster-regular judul-about-1">Tentang kami</h1>
+                </div>
+                <div class="teks-about" style="padding-top: 20px; padding-bottom: 20px;">
+                    <?php
+                                                        $sql = "SELECT * FROM teks_tentang WHERE kategori = 'produk kami'";
+                                                        $q = mysqli_query($conn, $sql);
+                                                        $data = [];
+                                                        while ($row = mysqli_fetch_array($q)) {
+                                                            $data[] = $row;
+                                                        }
+                                                        foreach ($data as $row):
+                                                        ?>
+                    <p class="poppins-regular teks-about-1" style="font-size: 20px; text-align: justify;"><span
+                            class="tab"></span><?php echo $row['teks'] ?></p>
+                    <?php endforeach ?>
+                </div>
+            </div>
+        </div>
     </div>
+    <!-- menu end -->
 </div>
-<!-- end content -->
-
+</div>
 <?php include '_component/footer.php'; ?>

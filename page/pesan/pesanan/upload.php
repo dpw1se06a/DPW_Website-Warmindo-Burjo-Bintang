@@ -4,6 +4,7 @@ $user_id = $_SESSION['user_id'];
 include '../config/connect.php';
 
 function uploadImage($user_id) {
+    echo $_POST['file'];
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["file"])) {
         echo $user_id;
         $targetDir = "../uploads/bukti_pembayaran/";
@@ -25,11 +26,6 @@ function uploadImage($user_id) {
             // Menghapus file yang ada jika file baru diunggah
             unlink($targetFile);
         }
-        // Batasi ukuran file
-        if ($_FILES["file"]["size"] > 500000) {
-            echo "Sorry, your file is too large.";
-            $uploadOk = 0;
-        }
         // Batasi format file
         if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
             echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
@@ -43,7 +39,7 @@ function uploadImage($user_id) {
                 // Simpan nama file ke database
                 global $conn;
                 $filename = basename($_FILES["file"]["name"]);
-                $sql = "INSERT INTO transaksi (user_id, bukti) VALUES ($user_id, '$filename')";
+                $sql = "UPDATE transaksi SET bukti = '$filename', status = 'pending' ";
                 if ($conn->query($sql) === TRUE) {
                     echo "Record updated successfully";
                     if (isset($_POST['ids']) && !empty($_POST['ids'])) {

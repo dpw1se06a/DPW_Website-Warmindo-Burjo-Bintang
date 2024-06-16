@@ -1,11 +1,11 @@
 <?php
-include "../../config/connect.php";
+include "../config/connect.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $id = $_POST['id'];
 
-    $query = "DELETE FROM cards WHERE id = $id";
+    $query = "DELETE FROM menu WHERE id_menu = $id";
 
     if ($conn->query($query)) {
         ?>

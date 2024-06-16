@@ -16,7 +16,7 @@
                                 <li class="nav-item">
                                     <a href="page.php?mod=konfirmasi-pesan" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Konfirmasi pesanan</p>
+                                        <p>Pesanan Berhasil</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">

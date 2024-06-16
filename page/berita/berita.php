@@ -1,16 +1,31 @@
-<?php
-session_start();
-?>
 <?php include '_component/header.php'; ?>
 <?php include "../config/connect.php"; ?>
+
+<?php
+include "../functions/sorting.php";
+
+$sql = "SELECT * FROM berita";
+$result = mysqli_query($conn, $sql);
+
+$berita = [];
+
+if (mysqli_num_rows($result)) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $berita[] = $row;
+    }
+    // Urutkan makanan dengan selection sort
+    selectionSort($berita, "tanggal");
+} else {
+    echo "No data";
+}
+?>
+?>
 <div class="container background-content" style="margin-top: 100px">
     <?php
     if (isset($_GET['id'])) {
         $id_berita = mysqli_real_escape_string($conn, $_GET['id']);
-
         $sql = "SELECT * FROM berita WHERE id_berita = $id_berita";
         $result = mysqli_query($conn, $sql);
-
         if (mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_assoc($result);
             ?>
@@ -23,21 +38,23 @@ session_start();
     </div>
     <br><br>
     <div class="gambar-berita">
-        <img src="<?php echo $row["gambar"]; ?>" alt="">
+        <img src="../uploads/berita/<?php echo $row["gambar"]; ?>" alt="">
     </div>
     </section>
 
     <section class="container isi-berita">
         <br><br>
         <br>
-        <div class="konten">
+        <div class="konten" style="display: flex; justify-content: center;">
+            <div class="isi-konten">
             <?php
                 // Memisahkan setiap paragraf dalam konten
                 $paragraf = explode("\n", $row["konten"]);
                 foreach ($paragraf as $p) {
-                    echo "<p style='text-align: justify; text-justify: inter-word;'>$p</p>";
+                    echo "<p style='text-indent: 45px;' class='paragraf-konten poppins-regular'>$p</p>";
                 }
                 ?>
+            </div>
         </div>
         <?php
         } else {
@@ -48,54 +65,62 @@ session_start();
     }
     ?>
     </section>
-    <section class="container berita" style="padding-top: 20px">
-        <div class="cover">
-            <h2 class="text-center">Berita lainnya</h2>
-            <button class="left" onclick="leftScroll()">
-                <p><i class="arrow left"></i></p>
-            </button>
-            <div class="scroll-images row">
-                <?php 
-                    $sql = "SELECT * FROM berita";
-                    $result = mysqli_query($conn, $sql);
-
-                    if (mysqli_num_rows($result)) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $id_berita_selengkapnya = $row["id_berita"];
-                            if($id_berita_selengkapnya == $id_berita) continue;
-                            ?>
-                <div class="col card-berita">
-                    <div class="card h-100">
-                        <img src="<?php echo $row["gambar"]?>" class="card-img-top" style="" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $row["judul"]; ?></h5>
-                        </div>
-                        <div class="card-footer">
-                            <a href="page.php?mod=berita-selengkapnya&id=<?php echo $id_berita_selengkapnya;?>"
-                                class="btn btn-primary">Selengkapnya</a>
-                            <br>
-                            <small class="text-body-secondary"><?php echo $row["tanggal"];?></small>
-                        </div>
+    <div class="container" style="margin-top: 40px">
+        <h1 class="text-center lobster-regular">Berita Lainnya</h1>
+        <div class="row row-cols-1 row-cols-md-3 g-4" style="margin-top: 20px">
+            <?php 
+    if (count($berita) > 0) {
+        $jumlah = 0;
+        foreach ($berita as $row) {
+            $id_berita_selengkapnya = $row["id_berita"];
+            $jumlah++;
+            if($id_berita_selengkapnya == $id_berita) continue;
+            ?>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="<?php echo $row["gambar"]?>" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $row["judul"]; ?></h5>
+                    </div>
+                    <div class="card-footer">
+                        <a href="page.php?mod=berita-selengkapnya&id=<?php echo $id_berita;?>"
+                            class="btn btn-primary">Selengkapnya</a>
+                        <br>
+                        <small class="text-body-secondary"><?php echo $row["tanggal"];?></small>
                     </div>
                 </div>
-                <?php
+            </div>
+            <?php
+                if ($jumlah == 6) break;
                         }
                     } else {
                         echo "No data";
                     }
                 ?>
-            </div>
-            <button class="right" onclick="rightScroll()">
-                <p><i class="arrow right"></i></p>
-            </button>
-    </section>
-    <script src="berita/horizontal-scroller.js"></script>
+        </div>
+    </div>
 </div>
-
 <br>
 <br>
 <style>
-    .cover {
+    .isi-konten {
+        max-width: 70%; /* Default max-width */
+    }
+    @media (max-width: 768px) {
+        .isi-konten {
+            max-width: 90%; /* Change max-width to 90% on screens smaller than 768px (typically mobile screens) */
+        }
+        .paragraf-konten{
+            font-size: 15px; 
+        }
+    }
+
+.paragraf-konten{
+    font-size: 20px; 
+    text-align: justify; 
+    text-justify: inter-word;
+}
+.cover {
     position: relative;
     padding: 0px 30px;
     margin-top: 100px;

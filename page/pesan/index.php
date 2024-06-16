@@ -4,32 +4,8 @@
 $userName = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 ?>
 <?php
-function insertionSort(&$array, $key) {
-    $n = count($array);
-    for ($i = 1; $i < $n; $i++) {
-        $value = $array[$i];
-        $j = $i - 1;
-        while ($j >= 0 && $array[$j][$key] < $value[$key]) {
-            $array[$j + 1] = $array[$j];
-            $j--;
-        }
-        $array[$j + 1] = $value;
-    }
-}
 
-// Fungsi untuk bubble sort
-function bubbleSort(&$array, $key) {
-    $n = count($array);
-    for ($i = 0; $i < $n - 1; $i++) {
-        for ($j = 0; $j < $n - $i - 1; $j++) {
-            if ($array[$j][$key] < $array[$j + 1][$key]) {
-                $temp = $array[$j];
-                $array[$j] = $array[$j + 1];
-                $array[$j + 1] = $temp;
-            }
-        }
-    }
-}
+include "../functions/sorting.php";
 
 // Mengambil data dari database
 $sql = "SELECT * FROM menu";
@@ -46,15 +22,15 @@ if (mysqli_num_rows($result)) {
             $minuman[] = $row;
         }
     }
-
     // Urutkan makanan dengan insertion sort
-    insertionSort($makanan, "harga");
+    insertionSortDesc($makanan, "harga");
 
     // Urutkan minuman dengan bubble sort
-    bubbleSort($minuman, "harga");
+    bubbleSortDesc($minuman, "harga");
 } else {
     echo "No data";
 }
+
 ?>
 <!-- content home -->
 <div class="content">
@@ -78,39 +54,7 @@ if (mysqli_num_rows($result)) {
             ?>
         </div>
         <!-- carousel -->
-        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel"
-            style="padding-top: 20px; padding-bottom: 40px">
-            <div class="carousel-inner">
-                <?php 
-                    $sql = "SELECT * FROM carousel_produk";
-                    $result = mysqli_query($conn, $sql);
-                    if (mysqli_num_rows($result)) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $id_carousel = $row["id_gambar"];
-                            ?>
-                <div class="carousel-item <?php if($id_carousel == 1) {
-                    echo " active";
-                } ?>">
-                    <img src="pesan/assets/img/carousel/<?php echo $row["gambar"]; ?>" class="d-block w-100" alt="...">
-                </div>
-                <?php
-                        }
-                    } else {
-                        echo "No data";
-                    }
-                ?>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
+        <?php include '_component/carouselMenu.php'; ?>
         <!-- menu -->
         <!-- makanan -->
         <div class="judul text-center">
@@ -124,7 +68,7 @@ if (mysqli_num_rows($result)) {
             ?>
             <div class="col">
                 <div class="card h-100">
-                    <img src="pesan/assets/img/menu/<?php echo $row["gambar"]?>" class="img-menu card-img-top" alt="..."
+                    <img src="../uploads/menu/<?php echo $row["gambar"]?>" class="img-menu card-img-top" alt="..."
                         style="width: 100%; height: 100%;">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $row["nama"]?></h5>

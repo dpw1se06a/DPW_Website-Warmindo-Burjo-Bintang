@@ -21,7 +21,7 @@
         </div>
         <div class="row mb-4">
             <div class="col-sm-12 col-lg-5">
-                <img src="pesan/assets/img/menu/<?php echo $row["gambar"] ?>" class="img-fluid">
+                <img src="../uploads/menu/<?php echo $row["gambar"]?>" class="img-fluid">
             </div>
             <div class="col-sm-12 col-lg-7">
                 <!-- copian di bawah -->

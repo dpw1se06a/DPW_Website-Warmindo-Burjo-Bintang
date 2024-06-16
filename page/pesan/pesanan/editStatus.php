@@ -8,7 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $ids_string = implode(',', $ids);
         // SQL query untuk update status
         $sql = "UPDATE keranjang SET status = 'checkout' WHERE id_keranjang IN ($ids_string)";
-
         if ($conn->query($sql) === TRUE) {
             echo "Record updated successfully";
             header("Location: ../../page.php?mod=checkout");
@@ -19,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "No items selected";
     }
 }
-
 // Menutup koneksi
 $conn->close();
 ?>

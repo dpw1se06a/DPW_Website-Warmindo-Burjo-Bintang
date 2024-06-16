@@ -1,16 +1,16 @@
 <?php
-include '../../config/connect.php';
+include "../config/connect.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $id = $_POST['id_tentang'];
+    $id = $_POST['id'];
 
-    $query = "DELETE FROM tentang WHERE id_tentang = $id";
+    $query = "DELETE FROM carousel WHERE id_carousel = $id";
 
     if ($conn->query($query)) {
         ?>
         <script>
-            window.location = "page.php?mod=tentang";
+            window.location = "page.php?mod=carousel";
         </script>
         <?php
         exit;

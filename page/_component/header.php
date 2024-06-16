@@ -68,11 +68,21 @@ $login = new Login();
                         <a class="nav-link" aria-current="page" href="page.php?mod=tentang">Tentang</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="page.php?mod=menu">menu</a>
+                        <a class="nav-link" aria-current="page" href="page.php?mod=menu">Menu</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="page.php?mod=pesan">Pesan</a>
-                    </li>
+                    <?php
+// ... ask if we are logged in here:
+if ($login->isUserLoggedIn() == true) {
+    // the user is logged in. you can do whatever you want here.
+    // for demonstration purposes, we simply show the "you are logged in" view.
+    echo '<a class="nav-link" aria-current="page" href="page.php?mod=pesan">Pesan</a>';
+} else {
+    // the user is not logged in. you can do whatever you want here.
+    // for demonstration purposes, we simply show the "you are not logged in" view.
+    echo '<button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#alertLoginModal">
+    Pesan</button>';
+}
+?>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="page.php?mod=berita">Berita</a>
                     </li>

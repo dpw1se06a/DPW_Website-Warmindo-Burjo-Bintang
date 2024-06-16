@@ -19,5 +19,17 @@
                 <p>Data User</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="page.php?mod=carousel" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Carousel Utama</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="page.php?mod=carousel-menu" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Carousel Menu</p>
+            </a>
+        </li>
     </ul>
 </li>

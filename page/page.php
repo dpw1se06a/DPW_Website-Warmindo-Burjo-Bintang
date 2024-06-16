@@ -2,11 +2,13 @@
 
 if($_GET['mod'] == "home"){
     include"home/home.php";
-} 
+}
 // berita
 elseif($_GET['mod'] == "berita"){
     include "berita/index.php";
-} 
+} elseif($_GET['mod'] == "berita-selengkapnya"){
+    include "berita/berita.php";
+}
 // fasilitas
 elseif($_GET['mod'] == "fasilitas"){
     include "fasilitas/fasilitas.php";
@@ -21,6 +23,8 @@ elseif($_GET['mod'] == "menu"){
 } 
 // pesan
 elseif($_GET['mod'] == "pesan"){
+    include "pesan/keranjang.php";
+} elseif($_GET['mod'] == "tambah-pesanan"){
     include "pesan/index.php";
 } elseif($_GET['mod'] == "keranjang"){
     include "pesan/keranjang.php";
@@ -44,14 +48,14 @@ elseif($_GET['mod'] == "ulasan"){
     include "ulasan/index.php";
 } elseif($_GET['mod'] == "get_review"){
     include "ulasan/get_review.php";
-}  
+}
 // login register
 elseif($_GET['mod'] == "login"){
     include "log-reg/index.php";
+} elseif($_GET['mod'] == "register"){
+    include "log-reg/register.php";
 } elseif($_GET['mod'] == "logout"){
-    // include "log-reg/logout.php?logout";
-    header("Location: log-reg/logout.php?logout");
-
+  header("Location: log-reg/logout.php");
 }
 
 ?>

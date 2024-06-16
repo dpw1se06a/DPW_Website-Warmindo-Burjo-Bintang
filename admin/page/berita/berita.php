@@ -1,4 +1,9 @@
-<?php include '_component/header.php'; ?>
+<?php include '_component/header.php';?>
+<?php include '../../config/connect.php';?>
+
+<?php
+include '../../functions/sorting.php';
+?>
 
 <body class="hold-transition sidebar-mini">
     <?php include '_component/wrapper.php'; ?>
@@ -9,147 +14,215 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Gallery</h1>
+                        <h1>Berita</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Gallery</li>
+                            <li class="breadcrumb-item"><a href="page.php?mod=dashboard">Home</a></li>
+                            <li class="breadcrumb-item active">Berita</li>
                         </ol>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <main role="main" class="col-12">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h2>Produk</h2>
-                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#tambahDataModal">
-                                Tambah Data
-                            </button>
-                        </div>
-                        <div class="table-responsive mt-3">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Judul</th>
-                                        <th>Konten</th>
-                                        <th>Tanggal</th>
-                                        <th>Gambar</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                            include '../config/koneksi.php';
-                // menggunakan query sql agar menampilkan data produk dan join kedalam tabel user agar mendapatkan siapa pemilik produk
-                            $query = "SELECT * FROM berita";
-                            $datas = $conn->query($query);
-                            foreach ($datas as $data):
-                            ?>
-                                    <tr>
-                                        <td>
-                                            <?= $data['judul'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $data['konten'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $data['tanggal'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $data['gambar'] ?>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                                data-target="#editDataModal<?= $data['id_berita']?>">Edit</button>
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#hapusDataModal<?= $data['id_berita']?>">Hapus</button>
-                                        </td>
-                                    </tr>
-                                    <!-- Modal ubah data -->
-                                    <div class="modal fade" id="editDataModal<?= $data['produk_id'] ?>" tabindex="-1"
-                                        role="dialog" aria-labelledby="editDataModalLabel" ariahidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="editDataModalLabel">Tambah Data Pengguna
-                                                    </h5>
-                                                    <button type="button" class="close" datadismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <form method="POST" action="produk/ubah.php">
-                                                    <div class="modal-body">
-                                                        <input type="hidden" name="produk_id"
-                                                            value="<?= $data['produk_id'] ?>">
-                                                        <div class=" form-group">
-                                                            <label for="nama">Nama</label>
-                                                            <input required type="text" class="formcontrol" id="nama"
-                                                                name="nama" value="<?= $data['nama'] ?>">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="harga">Harga</label>
-                                                            <input required type="number" class="formcontrol" id="harga"
-                                                                name="harga" value="<?= $data['harga'] ?>">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="number">Stok</label>
-                                                            <input required type="number" class="formcontrol"
-                                                                id="number" name="stok" value="<?= $data['stok'] ?>">
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Tutup</button>
-                                                        <button type="submit" class="btn btnprimary">Simpan</button>
-                                                    </div>
-                                                </form>
-                                            </div>
+                    <div class="col-12">
+                        <div class="card">
+                            <!-- HEADER -->
+                            <div class="card-header">
+                                <div class="row justify-content-between">
+                                    <div class="col m-1">
+                                        <div class="input-group">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#tambahDataMenu">
+                                                Tambah Data
+                                            </button>
                                         </div>
                                     </div>
-                                    <!-- Modal Hapus Data -->
-                                    <div class="modal fade" id="hapusDataModal<?= $data['produk_id'] ?>" tabindex="-1"
-                                        role="dialog" aria-labelledby="hapusDataModalLabel<?= $data['produk_id'] ?>"
-                                        aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title"
-                                                        id="hapusDataModalLabel<?= $data['produk_id'] ?>">
-                                                        Konfirmasi Penghapusan</h5>
-                                                    <button type="button" class="close" datadismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="tambahDataMenu" tabindex="-1"
+                                aria-labelledby="tambahDataMenuLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="tambahDataMenuLabel">
+                                                Tambah Data
+                                            </h1>
+                                        </div>
+                                        <form method="POST" action="page.php?mod=addBerita"
+                                            enctype="multipart/form-data">
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="title" class="form-label">Judul Berita</label>
+                                                    <input type="text" class="form-control" id="title" name="judul"
+                                                        value="">
                                                 </div>
-                                                <div class="modal-body">
-                                                    Apakah Anda yakin ingin menghapus data pengguna
-                                                    ini?
+                                                <div class="mb-3">
+                                                    <label type="textarea" for="title" class="form-label">Konten</label>
+                                                    <textarea class="form-control" id="title" name="konten" value="<?= $row['konten'] ?>"></textarea>
                                                 </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Batal</button>
-                                                    <a href="produk/hapus.php?id=<?= $data['produk_id'] ?>"
-                                                        class="btn btn-danger">Hapus</a>
+                                                <div class="mb-3">
+                                                    <label type="date" for="title" class="form-label">Tanggal</label>
+                                                    <input type="date" class="form-control" id="title" name="tanggal"
+                                                        value="">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="image" class="form-label">Gambar</label>
+                                                    <input type="file" name="file">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save
+                                                    changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="List" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-auto">Gambar</th>
+                                            <th class="w-auto">Judul</th>
+                                            <th class="w-auto">Konten</th>
+                                            <th class="w-auto">Tanggal</th>
+                                            <th class="w-auto"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $sql = "SELECT * FROM berita";
+                                        $q = mysqli_query($conn, $sql);
+                                        $data = [];
+                                        while ($row = mysqli_fetch_array($q)) {
+                                            $data[] = $row;
+                                        }
+                                        insertionSortDesc($data, "tanggal");
+                                        foreach ($data as $row):
+                                        ?>
+                                        <tr>
+                                            <td><img src="../../uploads/berita/<?= $row['gambar'] ?>" width="100px">
+                                            </td>
+                                            <td><?= $row['judul'] ?></td>
+                                            <td><?= $row['konten'] ?></td>
+                                            <td><?= $row['tanggal'] ?></td>
+                                            <td>
+                                                <button type="button" class="btn btn-warning" data-toggle="modal"
+                                                    data-target="#editDataMenu<?= $row['id_berita'] ?>"> Edit
+                                                </button>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                    data-target="#hapusDataMenu<?= $row['id_berita'] ?>">
+                                                    Hapus
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <!-- Modal tambah -->
+
+                                        <!-- Tutup -->
+                                        <!-- MODAL EDIT -->
+                                        <div class="modal fade" id="editDataMenu<?= $row['id_berita'] ?>" tabindex="-1"
+                                            aria-labelledby="editDataMenu<?= $row['id_berita'] ?>Label"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5"
+                                                            id="editDataMenu<?= $row['id_berita'] ?>Label">
+                                                            Edit
+                                                        </h1>
+                                                    </div>
+                                                    <form method="POST" action="page.php?mod=updateBerita"
+                                                        enctype="multipart/form-data">
+                                                        <div class="modal-body">
+                                                            <input type="text" class="form-control" id="id" name="id"
+                                                                value="<?= $row['id_berita'] ?>" hidden="true">
+                                                            <div class="mb-3">
+                                                                <label for="title" class="form-label">Judul
+                                                                    Berita</label>
+                                                                <input type="text" class="form-control" id="title"
+                                                                    name="judul" value="<?= $row['judul'] ?>">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="title" class="form-label">Konten</label>
+                                                                <textarea class="form-control" id="title" name="konten" value="<?= $row['konten'] ?>"></textarea>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="title" class="form-label">Tanggal</label>
+                                                                <input type="date" class="form-control" id="title"
+                                                                    name="tanggal" value="<?= $row['tanggal'] ?>">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="image" class="form-label">Gambar</label>
+                                                                <input type="file" name="file">
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Save
+                                                                changes</button>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <?php endforeach ?>
-                                </tbody>
-                            </table>
+                                        <!-- MODAL DELETE -->
+                                        <div class="modal fade" id="hapusDataMenu<?= $row['id_berita'] ?>" tabindex="-1"
+                                            aria-labelledby="editDataMenu<?= $row['id_berita'] ?>Label"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5"
+                                                            id="editDataMenu<?= $row['id_berita'] ?>Label">
+                                                            Hapus
+                                                        </h1>
+                                                    </div>
+                                                    <form method="POST" action="page.php?mod=deleteBerita">
+                                                        <div class="modal-body">
+                                                            <input type="text" class="form-control" id="id" name="id"
+                                                                value="<?= $row['id_berita'] ?>" hidden="true">
+                                                            <div class="mb-3">
+                                                                <h4>Konfirmasi hapus</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class=" modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Hapus</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <!-- /.card-body -->
                         </div>
-                    </main>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
                 </div>
-            </div><!-- /.container-fluid -->
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
         </section>
         <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
-    <?php include '_component/footer.php'; ?>
+        <?php include '_component/footer.php'; ?>
+</body>
+
+</html>

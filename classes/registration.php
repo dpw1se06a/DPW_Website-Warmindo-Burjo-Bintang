@@ -97,8 +97,8 @@ class Registration
                     $this->errors[] = "Sorry, that username / email address / no_hp is already taken.";
                 } else {
                     // write new user's data into database
-                    $sql = "INSERT INTO user (nama, email, no_hp, password)
-                            VALUES('" . $user_name . "', '" . $user_email . "', '" . $user_no_hp . "', '" . $user_password . "');";
+                    $sql = "INSERT INTO user (role_id, nama, email, no_hp, password)
+                            VALUES(3, '" . $user_name . "', '" . $user_email . "', '" . $user_no_hp . "', '" . $user_password . "');";
                     $query_new_user_insert = $this->db_connection->query($sql);
 
                     // if user has been added successfully

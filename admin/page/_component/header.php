@@ -1,7 +1,3 @@
-<?php
-session_start();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,4 +15,5 @@ session_start();
     <link rel="stylesheet" href="../../src/admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../../src/admin/css/adminlte.min.css">
+
 </head>

@@ -2,31 +2,10 @@
 <?php include "../config/connect.php"; ?>
 <?php
 $userName = isset($_SESSION['nama']) ? $_SESSION['nama'] : null;
+include "../functions/sorting.php";
 ?>
 <!-- carousel -->
-<div id="carouselExample" class="carousel slide">
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="https://placehold.co/600x400" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-            <img src="https://placehold.co/600x400" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-            <img src="https://placehold.co/600x400" class="d-block w-100" alt="...">
-        </div>
-    </div>
-    <button class="carousel-control-prev margin-10" type="button" data-bs-target="#carouselExample"
-        data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next margin-10" type="button" data-bs-target="#carouselExample"
-        data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
+<?php include '_component/carouselUtama.php'; ?>
 <!-- carousel end -->
 
 <!-- content home -->
@@ -37,18 +16,18 @@ $userName = isset($_SESSION['nama']) ? $_SESSION['nama'] : null;
             <div class="col-md-6 img-about">
                 <div class="row">
                     <div class="item-about col-md-6">
-                        <img src="https://placehold.co/200x200" alt="...">
+                        <img src="../uploads/galeri/galeri1.jpg" alt="..." style="width: 200px; height: 200px">
                     </div>
                     <div class="item-about col-md-6">
-                        <img src="https://placehold.co/200x200" alt="...">
+                        <img src="../uploads/galeri/galeri2.jpg" alt="..." style="width: 200px; height: 200px">
                     </div>
                 </div>
                 <div class="row">
                     <div class="item-about col-md-6">
-                        <img src="https://placehold.co/200x200" alt="...">
+                        <img src="../uploads/galeri/galeri3.jpg" alt="..." style="width: 200px; height: 200px">
                     </div>
                     <div class="item-about col-md-6">
-                        <img src="https://placehold.co/200x200" alt="...">
+                        <img src="../uploads/galeri/galeri4.jpg" alt="..." style="width: 200px; height: 200px">
                     </div>
                 </div>
             </div>
@@ -72,9 +51,6 @@ $userName = isset($_SESSION['nama']) ? $_SESSION['nama'] : null;
                 </div>
             </div>
         </div>
-        <!-- end about -->
-
-        <!-- menu start -->
         <div class="menu-dashboard container">
             <div class="menu-dashboard-title">
                 <img src="assets/wallpaper/menu-vector.png" alt="">
@@ -82,16 +58,15 @@ $userName = isset($_SESSION['nama']) ? $_SESSION['nama'] : null;
             <div class="menu-dashboard-content">
                 <div class="menu-dashboard-1 padding-bawah">
                     <div class="isi-menu col-md-6">
-                        <img class="img-menu" src="../assets/menu/breakfast-cafe-menu.png" alt="...">
+                        <img class="img-menu" src="../uploads/banner-menu/banner1.jpg" alt="...">
                     </div>
                     <div class="isi-menu col-md-6">
-                        <img class="img-menu" src="../assets/menu/breakfast-cafe-menu.png" alt="...">
+                        <img class="img-menu" src="../uploads/banner-menu/banner2.jpg" alt="...">
                     </div>
                 </div>
                 <div class="menu-dashboard-2 padding-bawah">
                     <div class="button-about">
-                        <a href="page.php?mod=menu"><button class="btn-selengkapnya-menu poppins-regular">Kenal lebih
-                                jauh</button></a>
+                        <a href="page.php?mod=menu"><button class="btn-selengkapnya-menu poppins-regular">Kenal lebih jauh</button></a>
                     </div>
                 </div>
             </div>

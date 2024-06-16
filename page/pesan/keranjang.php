@@ -1,13 +1,17 @@
-
 <?php include '_component/header.php'; ?>
 <?php include "../config/connect.php"; ?>
 <?php
-                if ($login->isUserLoggedIn() != true) {
-                header("Location: page.php?mod=pesan");
-                }
-            ?>
+// ... ask if we are logged in here:
+if ($login->isUserLoggedIn() == true) {
+} else {
+    // the user is not logged in. you can do whatever you want here.
+    // for demonstration purposes, we simply show the "you are not logged in" view.
+    header("location:page.php?mod=menu");
+}
+?>
 <?php
 $user_id = $_SESSION['user_id'];
+include "../functions/sorting.php";
 ?>
 <div class="content">
     <div class="container background-content">
@@ -49,8 +53,17 @@ $user_id = $_SESSION['user_id'];
             k.id_menu = m.id_menu
         WHERE 
             k.user_id =" . $user_id . " AND k.status = 'pending'";
-
-$datas = $conn->query($sql);
+$result = $conn->query($sql);
+$datas = [];
+if (mysqli_num_rows($result)) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $datas[] = $row;
+    }
+    // Urutkan makanan dengan insertion sort
+    selectionSort($datas, "kategori");
+} else {
+    echo "No data";
+}
 $array_harga = [];
 $array_pesanan = [];
 $number = 1;
@@ -75,7 +88,7 @@ foreach ($datas as $row):
                     <div class="col-sm-12 col-lg-4 mb-3">
                         <a href="" class="hvnb">
                             <div class="media">
-                                <img src="pesan/assets/img/menu/<?php echo $row["gambar"] ?>" width="100" class="mr-3">
+                                <img src="../uploads/menu/<?php echo $row["gambar"]?>" width="100" class="mr-3">
                                 <div class="media-body text-dark">
                                     <?php echo $row["nama"]?>
                                 </div>
@@ -159,7 +172,7 @@ foreach ($datas as $row):
             <?php endforeach ?>
             <div class="list-group-item">
                 <div class="row my-4">
-                    <a href="page.php?mod=pesan" class="btn btn-primary">Tambah Pesanan</a>
+                    <a href="page.php?mod=tambah-pesanan" class="btn btn-primary">Tambah Pesanan</a>
                 </div>
             </div>
         </div>
@@ -170,22 +183,45 @@ foreach ($datas as $row):
                             class="text-website">Rp<?php echo $total_array ?></span></h5>
                 </div>
                 <div class="col-sm-12 col-lg-3">
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#checkoutModal">
-                        Checkout
-                    </button>
-                    <!-- modal update status -->
-                    <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi Pesanan</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <form method="POST" action="pesan/pesanan/editStatus.php">
-                                    <div class="modal-body">
-                                        <?php
+                    <div class="modal-body">
+                        <?php
+										$number = 1;
+										$array_keranjang = [];
+                                        $length_keranjang = 0;
+										foreach($datas as $row):
+                                            $length_keranjang++;
+											$number++;
+										endforeach;
+											echo "Total: Rp" . $total_array;
+										?>
+                        <?php 
+                                        if ($length_keranjang > 0){
+                                            ?>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#checkoutModal">Checkout</button>
+                        <?php
+                                        } else {
+                                            ?>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#alertKeranjangModal">
+                            Checkout
+                        </button>
+                        <?php
+                                        }
+                                        ?>
+                        <!-- modal update status -->
+                        <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi Pesanan</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <form method="POST" action="pesan/pesanan/editStatus.php">
+                                        <div class="modal-body">
+                                            <?php
 										$number = 1;
 										$array_keranjang = [];
 										foreach($datas as $row):
@@ -200,24 +236,45 @@ foreach ($datas as $row):
 										endforeach;
 											echo "Total: Rp" . $total_array;
 										?>
-                                        <?php foreach($array_pesanan as $id): ?>
-                                        <input type="hidden" name="ids[]" value="<?php echo $id; ?>">
-                                        <?php endforeach; ?>
+                                            <?php foreach($array_pesanan as $id): ?>
+                                            <input type="hidden" name="ids[]" value="<?php echo $id; ?>">
+                                            <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+                                            <?php endforeach; ?>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="alertKeranjangModal" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                            Keranjang kosong:(</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Anda belum memesan menu sama sekali!
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                        <a href="page.php?mod=menu" class="btn btn-danger">Pesan</a>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
 
 </div>
