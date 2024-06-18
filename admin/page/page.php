@@ -57,6 +57,10 @@ if($_GET['mod'] == "dashboard"){
     include "menu/edit/hapus.php";
 } elseif($_GET['mod'] == "berita"){
     include "berita/berita.php";
+} elseif($_GET['mod'] == "beritaCoba"){
+    include "berita/index.php";
+} elseif($_GET['mod'] == "editBerita"){
+    include "berita/edit/editBerita.php";
 } elseif($_GET['mod'] == "addBerita"){
     include "berita/edit/tambah.php";
 } elseif($_GET['mod'] == "updateBerita"){
@@ -76,26 +80,30 @@ if($_GET['mod'] == "dashboard"){
 } elseif($_GET['mod'] == "logout"){
     include "logout/logout.php";
 } elseif($_GET['mod'] == "ulasan"){
-    if ($action == "tambah") {
-        include "ulasan/tambah.php";
-    } elseif ($action == "edit") {
-        include "ulasan/edit.php";
-    } elseif ($action == "delete") {
-        include "ulasan/hapus.php";
-    } elseif ($action == "data") {
-        include "ulasan/datatabel.php";
-    }
+    include "ulasan/tambah.php";
+} elseif($_GET['mod'] == "addUlasan"){
+    include "ulasan/proses_tambah.php";
+} elseif($_GET['mod'] == "crudUlasan"){
+    include "ulasan/datatabel.php";
+} elseif($_GET['mod'] == "updateUlasan"){
+    include "ulasan/edit.php";
+} elseif($_GET['mod'] == "deleteUlasan"){
+    include "ulasan/hapus.php";
 } elseif($_GET['mod'] == "fasilitas"){
-    if ($action == "tambah") {
-        include "fasilitas/tambah.php";
-    } elseif ($action == "edit") {
-        include "fasilitas/edit.php";
-    } elseif ($action == "delete") {
-        include "fasilitas/hapus.php";
-    } elseif ($action == "data") {
-        include "fasilitas/datatabel.php";
-    }
+    include "fasilitas/fasilitas.php";
+} elseif($_GET['mod'] == "updateFasilitas"){
+    include "fasilitas/edit.php";
+} elseif($_GET['mod'] == "deleteFasilitas"){
+    include "fasilitas/hapus.php";
+} elseif($_GET['mod'] == "addFasilitas"){
+    include "fasilitas/tambah.php";
 } elseif($_GET['mod'] == "kontak"){
     include "kontak/kontak.php";
+} elseif($_GET['mod'] == "addKontak"){
+    include "kontak/tambah.php";
+} elseif($_GET['mod'] == "updateKontak"){
+    include "kontak/edit.php";
+} elseif($_GET['mod'] == "deleteKontak"){
+    include "kontak/hapus.php";
 }
 ?>

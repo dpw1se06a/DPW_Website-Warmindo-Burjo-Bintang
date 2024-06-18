@@ -132,7 +132,6 @@ if (mysqli_num_rows($result)) {
                 </div>
             </div>
         </div>
-
         <!-- Modal Pantau Pesanan -->
         <div class="modal fade" id="pantauPesananModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -155,7 +154,7 @@ if (mysqli_num_rows($result)) {
                 m.gambar
             FROM 
                 keranjang k
-            JOIN 
+            JOIN
                 menu m
             ON 
                 k.id_menu = m.id_menu

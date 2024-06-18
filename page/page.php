@@ -57,5 +57,16 @@ elseif($_GET['mod'] == "login"){
 } elseif($_GET['mod'] == "logout"){
   header("Location: log-reg/logout.php");
 }
+elseif($_GET['mod'] == "submitReview"){
+    include "ulasan/submit_review.php";
+} elseif($_GET['mod'] == "get_review"){
+    if($_GET['action'] == "delete"){
+        include "ulasan/get_review.php";
+    } elseif($_GET['action' == "edit_review"]){
+        include "ulasan/get_review.php";
+    } elseif($_GET['action' == "edit_review"]) {
+        include "ulasan/get_review.php";
+    }
+}
 
 ?>

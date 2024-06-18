@@ -9,7 +9,8 @@ function uploadImage($conn) {
             $uploadOk = 1;
             $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
             $id = $_POST['id'];
-            $nama = $_POST['nama'];
+            $alamat = $_POST['nama'];
+            $status = $_POST['status'];
             
             // Periksa apakah file adalah gambar
             $check = getimagesize($_FILES["file"]["tmp_name"]);
@@ -38,10 +39,10 @@ function uploadImage($conn) {
                     echo "<br><img src='$targetFile' alt='Uploaded Image'>";
                     // Update data ke database
                     $filename = basename($_FILES["file"]["name"]);
-                    $sql = "UPDATE fasilitas SET nama = '$nama', gambar = '$filename' WHERE id = $id";
+                    $sql = "UPDATE kontak SET gambar = '$filename', alamat = '$alamat', status = '$status' WHERE id_kontak = $id";
                     if ($conn->query($sql) === TRUE) {
                         echo "Record updated successfully";
-                        header("location:page.php?mod=fasilitas");
+                        header("location:page.php?mod=kontak");
                     } else {
                         echo "Error updating record: " . $conn->error;
                     }
@@ -54,11 +55,12 @@ function uploadImage($conn) {
         } else {
             // Jika tidak ada file yang diunggah, hanya update data tanpa gambar
             $id = $_POST['id'];
-            $nama = $_POST['nama'];
-            $sql = "UPDATE fasilitas SET nama = '$nama' WHERE id = $id";
+            $alamat = $_POST['nama'];
+            $status = $_POST['status'];
+            $sql = "UPDATE kontak SET alamat = '$alamat', status = '$status' WHERE id_kontak = $id";
             if ($conn->query($sql) === TRUE) {
                 echo "Record updated successfully";
-                header("location:page.php?mod=fasilitas");
+                header("location:page.php?mod=kontak");
             } else {
                 echo "Error updating record: " . $conn->error;
             }

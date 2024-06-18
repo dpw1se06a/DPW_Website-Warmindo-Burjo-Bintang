@@ -1,18 +1,16 @@
 <?php
-
 include "../config/connect.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $id = $_POST['id_minuman'];
+    $id = $_POST['id'];
 
-    echo $id . "<br>";
-    $query = "DELETE FROM minuman WHERE id_minuman = $id";
+    $query = "DELETE FROM reviews WHERE id = $id";
 
     if ($conn->query($query)) {
         ?>
         <script>
-            window.location = "page.php?mod=minuman";
+            window.location = "page.php?mod=crudUlasan";
         </script>
         <?php
         exit;
@@ -20,3 +18,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Error executing query: " . $conn->error;
     }
 }
+?>

@@ -5,12 +5,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $id = $_POST['id'];
 
-    $query = "DELETE FROM fasilitas WHERE id = $id";
+    $query = "DELETE FROM kontak WHERE id_kontak = $id";
 
     if ($conn->query($query)) {
         ?>
         <script>
-            window.location = "page.php?mod=fasilitas";
+            window.location = "page.php?mod=kontak";
         </script>
         <?php
         exit;

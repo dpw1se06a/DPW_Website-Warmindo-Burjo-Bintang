@@ -7,11 +7,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Login atau Registrasi akun sebelum memesan makanan yawww!
+                Login atau Registrasi akun sebelum melakukan tindakan ini yaa!
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <a href="page.php?mod=login" class="btn btn-danger">Login/Register</a>
+                <a href="page.php?mod=login" class="btn btn-danger text-white">Login/Register</a>
             </div>
         </div>
     </div>

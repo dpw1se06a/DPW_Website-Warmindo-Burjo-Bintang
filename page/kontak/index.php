@@ -91,7 +91,6 @@
                 <div class="row">
                 </div>
             </div>
-
             <div class="isi-about text-center d-flex flex-column justify-content-center">
                 <div class="judul-about">
                     <h1 class="lobster-regular judul-about-">Lokasi</h1>
@@ -126,7 +125,7 @@
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
                                 echo "<div class='item-about col-md-6 mx-auto'>
-                                        <img src='" . $row["gambar"] . "' alt='...' class='img-fluid img-about'>
+                                        <img src='../uploads/kontak/" . $row["gambar"] . "' alt='...' class='img-fluid img-about'>
                                       </div>";
                                 echo  "<h5>      Burjo Bintang<h5> <br>";                            
                                 echo "<p>Alamat <br>" . $row["alamat"] . "</p>";

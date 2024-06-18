@@ -1,48 +1,11 @@
 <?php
 // Include wrapper file
-$header_file = '_component/header.php';
-if (file_exists($header_file)) {
-    include $header_file;
-} else {
-    echo "Wrapper file not found.";
-}
-
-// Koneksi ke database
-$servername = "localhost"; // Ganti dengan nama server Anda
-$username = "root"; // Ganti dengan username database Anda
-$password = ""; // Ganti dengan password database Anda
-$dbname = "project"; // Ganti dengan nama database Anda
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Cek koneksi
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Ambil data dari form
-    $nama = $_POST['nama'];
-    $email = $_POST['email'];
-    $telepon = $_POST['telepon'];
-    $tentang = $_POST['tentang'];
-    $pesan = $_POST['pesan'];
-    $tanggal = date("Y-m-d H:i:s");
-
-    // Query untuk menyimpan data ke tabel
-    $sql = "INSERT INTO reviews (nama, email, telepon, tentang, pesan, tanggal) VALUES ('$nama', '$email', '$telepon', '$tentang', '$pesan', '$tanggal')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "Ulasan berhasil ditambahkan.";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-
-    $conn->close();
-}
+include __DIR__ . '/../_component/header.php';
+include '../../config/connect.php';
 ?>
 
 <!-- Aside -->
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition light-mode sidebar-mini layout-fixed">
     <?php 
         // Include wrapper file
         $wrapper_file = '_component/wrapper.php';
@@ -63,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/Website-Warmindo-Burjo-Bintang/admin/page/page.php?mod=dashboard">Home</a></li>
                             <li class="breadcrumb-item active">Ulasan</li>
                         </ol>
                     </div>
@@ -78,23 +41,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form id="reviewForm" action="koneksi.php" method="POST">
+                <form id="reviewForm" action="page.php?mod=addUlasan" method="POST">
                     <div class="card-body">
+                        <?php
+                            $sql = "SELECT * FROM user";
+                            $q = mysqli_query($conn, $sql);
+                            $data = [];
+                            while ($row = mysqli_fetch_array($q)) {
+                                $data[] = $row;
+                                        }
+                                        ?>
                         <div class="form-group">
-                            <label for="nama">Nama</label>
-                            <input type="text" class="form-control" id="nama" placeholder="Nama" name="nama" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="telepon">No Telepon</label>
-                            <input type="text" class="form-control" id="telepon" placeholder="No Telepon" name="telepon" required>
+                            <label for="nama">User ID</label>
+                            <select class="form-control" id="tentang" name="user_id" required>
+                                <?php foreach ($data as $row): ?>
+                                <option value="<?php echo $row['user_id']; ?>">
+                                    <?php echo $row['user_id']; ?> - <?php echo $row['nama']; ?> - <?php echo $row['email']; ?> - <?php echo $row['no_hp']; ?>
+                                </option>
+                                <?php endforeach ?>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="tentang" class="form-label">Tentang:</label>
-                            <select class="form-select" id="tentang" name="tentang" required>
+                            <select class="form-control" id="tentang" name="tentang" required>
                                 <option value="Pelayanan">Pelayanan</option>
                                 <option value="Makanan">Makanan</option>
                                 <option value="Fasilitas">Fasilitas</option>
@@ -104,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div class="form-group">
                             <label for="pesan">Pesan</label>
-                            <textarea class="form-control" id="pesan" placeholder="Pesan" name="pesan" required></textarea>
+                            <textarea class="form-control" id="summernote" placeholder="Pesan" name="pesan" required></textarea>
                         </div>
                     </div>
                     <!-- /.card-body -->
@@ -114,13 +83,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </form>
             </div>
-
+    </section>
+    </div>
     <?php 
-        // Include footer file
-        $footer_file = '_component/footer.php';
-        if (file_exists($footer_file)) {
-            include $footer_file;
-        } else {
-            echo "Footer file not found.";
-        }
+        include __DIR__ . '/../_component/footer.php';
     ?>

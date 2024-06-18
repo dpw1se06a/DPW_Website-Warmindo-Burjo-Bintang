@@ -132,9 +132,9 @@ include '../../functions/sorting.php';
                                                         value="<?= $row['id_tentang'] ?>" hidden="true">
                                                     <div class="form-group">
                                                         <label for="nama">Isi konten</label>
-                                                        <textarea type="text" class="form-control" id="nama"
+                                                        <textarea type="text" class="form-control white" id="summernote"
                                                             placeholder="Enter Username"
-                                                            name="konten"><?php echo $row['teks'] ?></textarea>
+                                                            name="konten" style="color: white;"><?php echo $row['teks'] ?></textarea>
                                                     </div>
                                                 </div>
                                                 <!-- /.card-body -->

@@ -1,72 +1,50 @@
 <?php
 // Koneksi ke database (gantikan dengan koneksi sesuai dengan informasi database Anda)
-$host = 'localhost';
-$user = 'root';
-$password = '';
-$database = 'project';
-$koneksi = new mysqli($host, $user, $password, $database);
-
-// Periksa koneksi
-if ($koneksi->connect_error) {
-    die("Koneksi gagal: " . $koneksi->connect_error);
-}
+include "../config/connect.php";
 
 // Periksa apakah form telah disubmit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Ambil data dari form
-    $nama = $_POST['nama'];
-    $email = $_POST['email'];
-    $telepon = $_POST['telepon'];
+    $user_id = $_POST['user_id'];
     $tentang = $_POST['tentang'];
     $pesan = $_POST['pesan'];
 
     // Simpan data ke database
-    $sql = "INSERT INTO reviews (nama, email, telepon, tentang, pesan) VALUES ('$nama', '$email', '$telepon', '$tentang', '$pesan')";
-    if ($koneksi->query($sql) === TRUE) {
-        header('Location: ../page.php?mod=get_review');
+    $sql = "INSERT INTO reviews (user_id, tentang, pesan) VALUES ('$user_id', '$tentang', '$pesan')";
+    if ($conn->query($sql) === TRUE) {
+        header('Location: page.php?mod=get_review');
         exit();
     } else {
-        echo "Error: " . $sql . "<br>" . $koneksi->error;
+        echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
 
-$koneksi->close();
 ?>
 
 <?php
 // Koneksi ke database (gantikan dengan koneksi sesuai dengan informasi database Anda)
-$host = 'localhost';
-$user = 'root';
-$password = '';
-$database = 'reviews';
 
-$koneksi = new mysqli($host, $user, $password, $database);
-
-// Periksa koneksi
-if ($koneksi->connect_error) {
-    die("Koneksi gagal: " . $koneksi->connect_error);
-}
 
 // Fungsi untuk menghapus ulasan
 if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
     $id = $_GET['id'];
     $sql = "DELETE FROM reviews WHERE id=$id";
-    if ($koneksi->query($sql) === TRUE) {
+    if ($conn->query($sql) === TRUE) {
         // Redirect kembali ke halaman utama setelah berhasil menghapus
         header("Location: {$_SERVER['PHP_SELF']}");
         exit();
     } else {
-        echo "Error: " . $sql . "<br>" . $koneksi->error;
+        echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
 
 // Ambil ulasan dari database
-$sql = "SELECT id, nama, email, pesan, tentang, tanggal FROM reviews ORDER BY tanggal DESC";
-$result = $koneksi->query($sql);
+$sql = "SELECT * FROM reviews ORDER BY tanggal DESC";
+$result = $conn->query($sql);
 
 // Periksa apakah query berhasil
 if (!$result) {
-    die("Error dalam eksekusi query: " . $koneksi->error);
+    die("Error dalam eksekusi query: " . $conn->error);
 }
 
 // Buat array untuk menyimpan hasil
@@ -77,8 +55,6 @@ if ($result->num_rows > 0) {
     }
 }
 
-// Tutup koneksi
-$koneksi->close();
 ?>
 
 <!DOCTYPE html>
@@ -88,9 +64,10 @@ $koneksi->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ulasan Pengguna</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
-    <?php include 'header.php'; ?>
+    <?php include '../_component/header.php'; ?>
     <div class="container get_review">
         <h2 class="text-center">Ulasan</h2>
         <?php foreach ($reviews as $review): ?>
@@ -112,6 +89,6 @@ $koneksi->close();
         </div>
         <?php endforeach; ?>
     </div>
-    <?php include 'footer.php'; ?>
+    <?php include '../_component/footer.php'; ?>
 </body>
 </html>

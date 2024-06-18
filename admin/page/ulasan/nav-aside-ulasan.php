@@ -6,7 +6,7 @@
             <i class="right fas fa-angle-left"></i>
         </p>
     </a>
-    <ul class="nav nav-treeview">
+    <ul class="nav nav-treeview" style="height: auto; max-height: none; overflow: visible;">
         <li class="nav-item">
             <a href="page.php?mod=ulasan&action=tambah" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
@@ -14,7 +14,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="page.php?mod=ulasan&action=data" class="nav-link">
+            <a href="page.php?mod=crudUlasan" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Data Tabel</p>
             </a>

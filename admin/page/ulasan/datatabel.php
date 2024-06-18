@@ -1,37 +1,28 @@
 <?php
-// Include header file
-$header_file = '_component/header.php';
-if (file_exists($header_file)) {
-    include $header_file;
-} else {
-    echo "Header file not found.";
-}
+// Define the paths to the files
+include __DIR__ . '/../_component/header.php';
+include '../../config/connect.php';
 
-// Database configuration
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "project";
-
-try {
-    // Create connection
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    // Set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Prepare SQL statement to fetch data
-    $stmt = $conn->prepare("SELECT * FROM reviews");
-    // Execute the prepared statement
-    $stmt->execute();
-    // Fetch all rows as an associative array
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch(PDOException $e) {
-    echo "Error: " . $e->getMessage();
+$sql = "SELECT u.user_id,
+u.nama,
+u.email,
+u.no_hp,
+r.id,
+r.tentang,
+r.pesan,
+r.tanggal
+FROM reviews r JOIN user u WHERE r.user_id = u.user_id;";
+$q = mysqli_query($conn, $sql);
+$data = [];
+while ($row = mysqli_fetch_array($q)) {
+    $data[] = $row;
 }
 ?>
 
-<body class="hold-transition sidebar-mini">
-    <?php include '_component/wrapper.php'; ?>
+<body class="hold-transition light-mode sidebar-mini layout-fixed">
+    <?php 
+    include __DIR__ . '/../_component/wrapper.php';
+    ?>
     <div class="content-wrapper">
         <section class="content-header">
             <div class="container-fluid">
@@ -41,124 +32,196 @@ try {
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a
+                                    href="/Website-Warmindo-Burjo-Bintang/admin/page/page.php?mod=dashboard">Home</a>
+                            </li>
                             <li class="breadcrumb-item active">Ulasan</li>
                         </ol>
                     </div>
                 </div>
             </div>
         </section>
-
         <section class="content">
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Data Ulasan Pengguna</h3>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Warmin Burjo Bintang</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>No Telepon</th>
-                                    <th>Tentang</th>
-                                    <th>Pesan</th>
-                                    <th>Tanggal</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                    foreach ($results as $row) {
-                                        echo "<tr>";
-                                        echo "<td>".$row['nama']."</td>";
-                                        echo "<td>".$row['email']."</td>";
-                                        echo "<td>".$row['telepon']."</td>";
-                                        echo "<td>".$row['tentang']."</td>";
-                                        echo "<td>".$row['pesan']."</td>";
-                                        echo "<td>".$row['tanggal']."</td>";
-                                        echo "<td>
-                                                <a href='/Website-Warmindo-Burjo-Bintang/admin/page/ulasan/config/prosesubah.php' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#editDataModal".$row['id']."'>Edit</a>
-                                                <a href='hapus_user.php".$row['id']."' class='btn btn-danger btn-sm' onclick='return confirm(\"Are you sure you want to delete this review?\");'>Delete</a>
-                                              </td>";
-                                        echo "</tr>";
-
-                                        // Modal for edit
-                                        echo "
-                                        <div class='modal fade' id='editDataModal".$row['id']."' tabindex='-1' role='dialog' aria-labelledby='editDataModalLabel".$row['id']."' aria-hidden='true'>
-                                            <div class='modal-dialog' role='document'>
-                                                <div class='modal-content'>
-                                                    <div class='modal-header'>
-                                                        <h5 class='modal-title' id='editDataModalLabel".$row['id']."'>Ubah Data</h5>
-                                                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                                                            <span aria-hidden='true'>&times;</span>
-                                                        </button>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <!-- HEADER -->
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="List" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="w-auto">User ID</th>
+                                            <th class="w-auto">Nama</th>
+                                            <th class="w-auto">Email</th>
+                                            <th class="w-auto">Nomor HP</th>
+                                            <th class="w-auto">Tentang</th>
+                                            <th class="w-auto">Pesan</th>
+                                            <th class="w-auto">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $sql = "SELECT u.user_id,
+u.nama,
+u.email,
+u.no_hp,
+r.id,
+r.tentang,
+r.pesan,
+r.tanggal
+FROM reviews r JOIN user u WHERE r.user_id = u.user_id;";
+                                        $q = mysqli_query($conn, $sql);
+                                        $data = [];
+                                        while ($row = mysqli_fetch_array($q)) {
+                                            $data[] = $row;
+                                        }
+                                        foreach ($data as $row):
+                                        ?>
+                                        <tr>
+                                            <td><?= $row['user_id'] ?></td>
+                                            <td><?= $row['nama'] ?></td>
+                                            <td><?= $row['email'] ?></td>
+                                            <td><?= $row['no_hp'] ?></td>
+                                            <td><?= $row['tentang'] ?></td>
+                                            <td><?= $row['pesan'] ?></td>
+                                            <td>
+                                                <button type="button" class="btn btn-warning" data-toggle="modal"
+                                                    data-target="#editDataMenu<?= $row['id'] ?>">Edit
+                                                </button>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                    data-target="#hapusDataMenu<?= $row['id'] ?>">
+                                                    Hapus
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <!-- Modal tambah -->
+                                        <!-- Tutup -->
+                                        <!-- MODAL EDIT -->
+                                        <div class="modal fade" id="editDataMenu<?= $row['id'] ?>" tabindex="-1"
+                                            aria-labelledby="editDataMenu<?= $row['user_id'] ?>Label"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5"
+                                                            id="editDataMenu<?= $row['user_id'] ?>Label">
+                                                            Edit <?= $row['nama'] ?>
+                                                        </h1>
                                                     </div>
-                                                    <form method='POST' action='/Website-Warmindo-Burjo-Bintang/admin/page/ulasan/config/prosesubah.php'>
-                                                        <div class='modal-body'>
-                                                            <input type='hidden' name='id' value='".$row['id']."'>
-                                                            <div class='form-group'>
-                                                                <label for='nama'>Nama</label>
-                                                                <input required type='text' class='form-control' id='nama' name='nama' value='".$row['nama']."'>
-                                                            </div>
-                                                            <div class='form-group'>
-                                                                <label for='email'>Email</label>
-                                                                <input required type='email' class='form-control' id='email' name='email' value='".$row['email']."'>
-                                                            </div>
-                                                            <div class='form-group'>
-                                                                <label for='telepon'>Telepon</label>
-                                                                <input required type='text' class='form-control' id='telepon' name='telepon' value='".$row['telepon']."'>
-                                                            </div>
-                                                            <div class='mb-3'>
-                                                                <label for='tentang' class='form-label'>Tentang:</label>
-                                                                <select class='form-select' id='tentang' name='tentang' required>
-                                                                    <option value='Pelayanan' ".($row['tentang'] == 'Pelayanan' ? 'selected' : '').">Pelayanan</option>
-                                                                    <option value='Makanan' ".($row['tentang'] == 'Makanan' ? 'selected' : '').">Makanan</option>
-                                                                    <option value='Fasilitas' ".($row['tentang'] == 'Fasilitas' ? 'selected' : '').">Fasilitas</option>
-                                                                    <option value='Harga' ".($row['tentang'] == 'Harga' ? 'selected' : '').">Harga</option>
-                                                                    <option value='Lainnya' ".($row['tentang'] == 'Lainnya' ? 'selected' : '').">Lainnya</option>
+                                                    <form method="POST" action="page.php?mod=updateUlasan"
+                                                        enctype="multipart/form-data">
+                                                        <div class="modal-body">
+                                                            <input type="text" class="form-control" id="id"
+                                                                name="user_id" value="<?= $row['id'] ?>"
+                                                                hidden="true">
+                                                            <div class="mb-3">
+                                                                <label for="title" class="form-label">Tentang</label>
+                                                                <select class="form-control" id="tentang" name="tentang"
+                                                                    required>
+                                                                    <option value="Pelayanan">Pelayanan</option>
+                                                                    <option value="Makanan">Makanan</option>
+                                                                    <option value="Fasilitas">Fasilitas</option>
+                                                                    <option value="Harga">Harga</option>
+                                                                    <option value="Lainnya">Lainnya</option>
+                                                                    <?php
+                                                                    if ($row['tentang'] == "Pelayanan") {
+                                                                        echo '<option value="Pelayanan" selected>Pelayanan</option>
+                                                                    <option value="Makanan">Makanan</option>
+                                                                    <option value="Fasilitas">Fasilitas</option>
+                                                                    <option value="Harga">Harga</option>
+                                                                    <option value="Lainnya">Lainnya</option>';
+                                                                    } elseif($row['tentang'] == "Makanan")  {
+                                                                        echo '<option value="Pelayanan">Pelayanan</option>
+                                                                    <option value="Makanan" selected>Makanan</option>
+                                                                    <option value="Fasilitas">Fasilitas</option>
+                                                                    <option value="Harga">Harga</option>
+                                                                    <option value="Lainnya">Lainnya</option>';
+                                                                    } elseif($row['tentang'] == "Fasilitas")  {
+                                                                        echo '<option value="Pelayanan">Pelayanan</option>
+                                                                    <option value="Makanan">Makanan</option>
+                                                                    <option value="Fasilitas" selected>Fasilitas</option>
+                                                                    <option value="Harga">Harga</option>
+                                                                    <option value="Lainnya">Lainnya</option>';
+                                                                    } elseif($row['tentang'] == "Harga")  {
+                                                                        echo '<option value="Pelayanan">Pelayanan</option>
+                                                                    <option value="Makanan">Makanan</option>
+                                                                    <option value="Fasilitas">Fasilitas</option>
+                                                                    <option value="Harga" selected>Harga</option>
+                                                                    <option value="Lainnya">Lainnya</option>';
+                                                                    } elseif($row['tentang'] == "Lainnya")  {
+                                                                        echo '<option value="Pelayanan">Pelayanan</option>
+                                                                    <option value="Makanan">Makanan</option>
+                                                                    <option value="Fasilitas">Fasilitas</option>
+                                                                    <option value="Harga">Harga</option>
+                                                                    <option value="Lainnya" selected>Lainnya</option>';
+                                                                    }
+                                                                    ?>
                                                                 </select>
                                                             </div>
-                                                            <div class='form-group'>
-                                                                <label for='pesan'>Pesan</label>
-                                                                <textarea required class='form-control' id='pesan' name='pesan'>".$row['pesan']."</textarea>
+                                                            <div class="mb-3">
+                                                                <label for="title" class="form-label">Pesan</label>
+                                                                <textarea class="form-control" name="pesan" id=""><?php echo $row['pesan']; ?></textarea>
                                                             </div>
                                                         </div>
-                                                        <div class='modal-footer'>
-                                                            <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
-                                                            <button type='submit' class='btn btn-primary'>Save changes</button>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Save
+                                                                changes</button>
                                                         </div>
                                                     </form>
                                                 </div>
                                             </div>
-                                        </div>";
-                                    }
-                                    
-                                ?>
-                            </tbody>
-                        </table>
+                                        </div>
+                                        <!-- MODAL DELETE -->
+                                        <div class="modal fade" id="hapusDataMenu<?= $row['id'] ?>" tabindex="-1"
+                                            aria-labelledby="editDataMenu<?= $row['id'] ?>Label"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5"
+                                                            id="editDataMenu<?= $row['id'] ?>Label">
+                                                            Hapus
+                                                        </h1>
+                                                    </div>
+                                                    <form method="POST" action="page.php?mod=deleteUlasan">
+                                                        <div class="modal-body">
+                                                            <input type="text" class="form-control" id="id" name="id"
+                                                                value="<?= $row['id'] ?>" hidden="true">
+                                                            <div class="mb-3">
+                                                                <h4>Konfirmasi hapus </h4>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class=" modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Hapus</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
                     </div>
+                    <!-- /.col -->
                 </div>
+                <!-- /.row -->
             </div>
+            <!-- /.container-fluid -->
         </section>
     </div>
     <?php 
-        // Include footer file
-        $footer_file = '_component/footer.php';
-        if (file_exists($footer_file)) {
-            include $footer_file;
-        } else {
-            echo "Footer file not found.";
-        }
+    include __DIR__ . '/../_component/footer.php';
     ?>
-</body>
-</html>

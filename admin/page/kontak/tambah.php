@@ -4,11 +4,12 @@ include '../config/connect.php'; // Include your database connection file
 function uploadImage($conn) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_FILES["file"]) && $_FILES["file"]["tmp_name"] != '') { // Check if file is uploaded and not empty
-            $targetDir = "../../uploads/fasilitas/";
+            $targetDir = "../../uploads/kontak/";
             $targetFile = $targetDir . basename($_FILES["file"]["name"]);
             $uploadOk = 1;
             $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-            $nama = $_POST['nama'];
+            $alamat = $_POST['nama'];
+            $status = $_POST['status'];
             
             // Periksa apakah file adalah gambar
             $check = getimagesize($_FILES["file"]["tmp_name"]);
@@ -38,10 +39,10 @@ function uploadImage($conn) {
                 // Simpan nama file ke database
                 global $conn;
                 $filename = basename($_FILES["file"]["name"]);
-                $sql = "INSERT INTO fasilitas (nama, gambar) VALUES ('$nama', '$filename')";
+                $sql = "INSERT INTO kontak (gambar, alamat, status) VALUES ('$filename', '$alamat', '$status')";
                 if ($conn->query($sql) === TRUE) {
                     echo "Record updated successfully";
-                    header("Location: page.php?mod=fasilitas");
+                    header("Location: page.php?mod=kontak");
                 } else {
                     echo "Error updating record: " . $conn->error;
                 }
