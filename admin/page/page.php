@@ -75,6 +75,8 @@ if($_GET['mod'] == "dashboard"){
     include "pesan/proses/updateSelesai.php";
 } elseif($_GET['mod'] == "konfirmasi-pesan"){
     include "pesan/konfirmasi-pesan.php";
+} elseif($_GET['mod'] == "reject-pesan"){
+    include "pesan/proses/rejectPesanan.php";
 } elseif($_GET['mod'] == "keranjang"){
     include "pesan/keranjang.php";
 } elseif($_GET['mod'] == "logout"){

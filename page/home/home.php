@@ -7,7 +7,17 @@ include "../functions/sorting.php";
 <!-- carousel -->
 <?php include '_component/carouselUtama.php'; ?>
 <!-- carousel end -->
-
+<style>
+  .background-content {
+    color: #000000;
+    width: 100%;
+    margin: 20px auto;
+    background-color: #FFED9E;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+}
+</style>
 <!-- content home -->
 <div class="content">
     <div class="container background-content">
@@ -53,7 +63,7 @@ include "../functions/sorting.php";
         </div>
         <div class="menu-dashboard container">
             <div class="menu-dashboard-title">
-                <img src="assets/wallpaper/menu-vector.png" alt="">
+                <img src="../assets/wallpaper/menu-vector.png" alt="">
             </div>
             <div class="menu-dashboard-content">
                 <div class="menu-dashboard-1 padding-bawah">

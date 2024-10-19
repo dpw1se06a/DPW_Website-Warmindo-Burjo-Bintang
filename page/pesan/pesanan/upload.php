@@ -4,13 +4,14 @@ $user_id = $_SESSION['user_id'];
 include '../config/connect.php';
 
 function uploadImage($user_id) {
-    echo $_POST['file'];
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["file"])) {
         echo $user_id;
         $targetDir = "../uploads/bukti_pembayaran/";
         $targetFile = $targetDir . basename($_FILES["file"]["name"]);
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+        $id_transaksi = $_POST['id_transaksi'];
+        echo $id_transaksi;
 
         // Periksa apakah file adalah gambar
         $check = getimagesize($_FILES["file"]["tmp_name"]);
@@ -39,16 +40,16 @@ function uploadImage($user_id) {
                 // Simpan nama file ke database
                 global $conn;
                 $filename = basename($_FILES["file"]["name"]);
-                $sql = "UPDATE transaksi SET bukti = '$filename', status = 'pending' ";
+                $sql = "UPDATE transaksi SET bukti = '$filename', status = 'pending' WHERE id_transaksi = $id_transaksi";
                 if ($conn->query($sql) === TRUE) {
                     echo "Record updated successfully";
                     if (isset($_POST['ids']) && !empty($_POST['ids'])) {
                         $ids = $_POST['ids'];
                         $ids_string = implode(',', $ids);
-                        $sql = "UPDATE keranjang SET status = 'dibayar' WHERE id_keranjang IN ($ids_string)";
+                        $sql = "UPDATE keranjang SET status = 'dibayar' WHERE id_keranjang IN ($ids_string) AND id_transaksi = $id_transaksi";
                         if ($conn->query($sql) === TRUE) {
                             echo "Record updated successfully";
-                            header("Location: page.php?mod=pesan");
+                            header("Location: page.php?mod=menu");
                         } else {
                             echo "Error updating record: " . $conn->error;
                         }

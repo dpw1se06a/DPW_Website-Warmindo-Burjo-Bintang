@@ -41,12 +41,14 @@ $user_id = $_SESSION['user_id'];
     <div class="container background-content">
         <?php
         $sqlUser = "SELECT * FROM user WHERE user_id = ". $user_id;
+        // $sqlTransaksi = "SELECT ";
         $sqlKeranjang = "SELECT 
             k.id_keranjang,
             k.id_menu,
             k.user_id,
             k.jumlah,
             k.status,
+            k.id_transaksi,
             m.nama,
             m.harga,
             m.kategori,
@@ -61,6 +63,7 @@ $user_id = $_SESSION['user_id'];
             k.user_id =" . $user_id . " AND status = 'checkout'";
         $dataUser = $conn->query($sqlUser);
         $result = $conn->query($sqlKeranjang);
+        
         $length_keranjang = 0;
         if ($result) {
             $num_rows = $result->num_rows;
@@ -89,6 +92,7 @@ $user_id = $_SESSION['user_id'];
                     $number = 1;
                     $array_keranjang = [];
                         foreach($result as $row):
+                            $id_transaksi = $row['id_transaksi'];
                         $array_keranjang[] = $row['id_keranjang'];
                         $total_harga = $row['jumlah'] * $row['harga'];
 					    echo "Pesanan ". $number;
@@ -98,8 +102,30 @@ $user_id = $_SESSION['user_id'];
 					    echo "<br>";
 					    $number++;
 					    endforeach;
+                        
                 ?>
-                <?php
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#batalModal">
+                        Batal pesanan
+                    </button>
+                    <div class="modal fade" id="batalModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form action="page.php?mod=batal-pesanan" method="post">
+                                    <div class="modal-body">
+                                        <input type="hidden" name="id_transaksi" value="<?php echo $id_transaksi; ?>">
+                                        <p>Apakah anda yakin untuk membatalkan pesanan?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-danger">Upload</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
                 } else {
                     ?>
                     <h5>Anda belum melakukan checkout. Apakah anda ingin memesan makanan?</h5>
@@ -141,7 +167,8 @@ $user_id = $_SESSION['user_id'];
                                         <div class="modal-body">
                                             <input type="file" name="file">
                                             <?php foreach($array_keranjang   as $id): ?>
-                                            <input type="" name="ids[]" value="<?php echo $id; ?>">
+                                            <input type="hidden" name="ids[]" value="<?php echo $id; ?>">
+                                            <input type="" name="id_transaksi" value="<?php echo $id_transaksi; ?>">
                                             <?php endforeach; ?>
                                         </div>
                                         <div class="modal-footer">

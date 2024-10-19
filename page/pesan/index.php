@@ -1,10 +1,7 @@
 <?php include '_component/header.php'; ?>
 <?php include "../config/connect.php"; ?>
-<?php
-$userName = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-?>
-<?php
 
+<?php
 include "../functions/sorting.php";
 
 // Mengambil data dari database
@@ -30,8 +27,12 @@ if (mysqli_num_rows($result)) {
 } else {
     echo "No data";
 }
-
 ?>
+<style>
+.content {
+    margin-top: 120px;
+}
+</style>
 <!-- content home -->
 <div class="content">
     <div class="container background-content">
@@ -57,7 +58,7 @@ if (mysqli_num_rows($result)) {
         <?php include '_component/carouselMenu.php'; ?>
         <!-- menu -->
         <!-- makanan -->
-        <div class="judul text-center">
+        <div class="judul text-center" style="margin-top: 40px; margin-bottom: 40px;">
             <h1 class="lobster-regular">Makanan</h1>
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4" style="padding-bottom: 40px">
@@ -85,7 +86,7 @@ if (mysqli_num_rows($result)) {
     }
     ?>
         </div>
-        <div class="judul text-center">
+        <div class="judul text-center" style="margin-bottom: 40px;">
             <h1 class="lobster-regular">Minuman</h1>
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4" style="padding-bottom: 40px">
@@ -96,7 +97,7 @@ if (mysqli_num_rows($result)) {
             ?>
             <div class="col">
                 <div class="card h-100">
-                    <img src="pesan/assets/img/menu/<?php echo $row["gambar"]?>" class="img-menu card-img-top" alt="..."
+                    <img src="../uploads/menu/<?php echo $row["gambar"]?>" class="img-menu card-img-top" alt="..."
                         style="width: 100%; height: 100%;">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $row["nama"]?></h5>
@@ -115,25 +116,10 @@ if (mysqli_num_rows($result)) {
         </div>
     </div>
     <!-- modal alert -->
-    <div class="modal fade" id="alertLoginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Peringatan Login</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Login atau Registrasi akun sebelum memesan makanan yawww!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a href="page.php?mod=login" class="btn btn-danger">Login/Register</a>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <!-- modal pantau -->
-    <div class="modal fade" id="pantauPesananModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="pantauPesananModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -142,6 +128,8 @@ if (mysqli_num_rows($result)) {
                 </div>
                 <div class="modal-body">
                     <?php 
+                    if ($login->isUserLoggedIn() == true) {
+                
                     $sqlKeranjang = "SELECT 
             k.id_keranjang,
             k.id_menu,
@@ -174,6 +162,7 @@ if (mysqli_num_rows($result)) {
 					echo "<br>";
 					$number++;
 					endforeach;
+                }
                 ?>
                 </div>
                 <div class="modal-footer">
@@ -182,7 +171,40 @@ if (mysqli_num_rows($result)) {
             </div>
         </div>
     </div>
+    <div class="modal fade" id="alertLoginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Peringatan Login</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Login atau Registrasi akun sebelum melakukan tindakan ini yaa!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="page.php?mod=login" class="btn btn-danger text-white">Login/Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+
 <!-- end content -->
-<?php include '_component/footer.php'; ?>
+<!-- end content -->
+
+<footer class="footer">
+    <div class="footer-content">
+        <p>Copyright &copy; 2024 Burjo Bintang | All Right Reserved</p>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

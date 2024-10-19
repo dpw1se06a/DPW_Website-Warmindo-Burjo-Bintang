@@ -10,7 +10,8 @@ if ($login->isUserLoggedIn() == true) {
 ?>
 <div class="container">
     <h2 class="text-center lobster-regular">Berikan Ulasan</h2>
-    <p class="text-center poppins-regular">Sampaikan kritik, saran, pertanyaan, bagi cerita / pengalaman Anda dengan Burjo Bintang. Masukan Anda sangat berarti untuk meningkatkan pelayanan kami.</p>
+    <p class="text-center poppins-regular">Sampaikan kritik, saran, pertanyaan, bagi cerita / pengalaman Anda dengan
+        Burjo Bintang. Masukan Anda sangat berarti untuk meningkatkan pelayanan kami.</p>
     <form id="reviewForm" action="page.php?mod=submitReview" method="POST">
         <input type="hidden" class="form-control" id="nama" name="user_id" value="<?php echo $user_id ?>">
         <div class="mb-3">
@@ -45,6 +46,23 @@ if ($login->isUserLoggedIn() == true) {
 
 ?>
     </form>
+    <div class="modal fade" id="alertLoginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Peringatan Login</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Login atau Registrasi akun sebelum melakukan tindakan ini yaa!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="page.php?mod=login" class="btn btn-danger text-white">Login/Register</a>
+            </div>
+        </div>
+    </div>
+</div>
     <div id="reviews">
         <!-- Ulasan akan dimuat di sini oleh JavaScript -->
     </div>

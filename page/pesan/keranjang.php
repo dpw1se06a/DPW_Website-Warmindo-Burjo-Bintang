@@ -238,8 +238,8 @@ foreach ($datas as $row):
 										?>
                                             <?php foreach($array_pesanan as $id): ?>
                                             <input type="hidden" name="ids[]" value="<?php echo $id; ?>">
-                                            <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
                                             <?php endforeach; ?>
+                                            <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"

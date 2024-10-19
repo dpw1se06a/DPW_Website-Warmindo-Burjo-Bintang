@@ -38,6 +38,8 @@ elseif($_GET['mod'] == "pesan"){
     include "pesan/checkout.php";
 } elseif($_GET['mod'] == "upload"){
     include "pesan/pesanan/upload.php";
+} elseif($_GET['mod'] == "batal-pesanan"){
+    include "pesan/pesanan/batal.php";
 }
 // tentang
 elseif($_GET['mod'] == "tentang"){

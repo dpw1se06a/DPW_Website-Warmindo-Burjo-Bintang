@@ -116,7 +116,7 @@
                                                 foreach ($user_orders as $id_transaksi => $order) {
                                                 ?>
                                         <tr>
-                                            <td><?php echo $user_id; ?></td>
+                                            <td><?php echo $id_transaksi; ?></td>
                                             <td><?php echo $order["nama"]; ?></td>
                                             <td>
                                                 <?php
@@ -140,6 +140,12 @@
                                                     data-id_keranjang="<?php echo implode(",", $order["id_keranjang"]); ?>">
                                                     Konfirmasi
                                                 </button>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                    data-target="#modalTolak<?php echo $id_transaksi; ?>"
+                                                    data-user_id="<?php echo $user_id; ?>"
+                                                    data-id_keranjang="<?php echo implode(",", $order["id_keranjang"]); ?>">
+                                                    Tolak
+                                                </button>
                                             </td>
                                         </tr>
                                         <!-- modal edit -->
@@ -156,14 +162,41 @@
                                                     <div class="modal-body upload-form-container">
                                                         <form action="page.php?mod=updatePesanan" method="post">
                                                             <div class="modal-body">
-                                                                <input class="form-control" type="" name="id_transaksi" value="<?php echo $id_transaksi; ?>">
+                                                                <input class="form-control" type="hidden" name="id_transaksi" value="<?php echo $id_transaksi; ?>">
                                                                 <label for="text" class="form-text">Apakah anda yakin untuk mengonfirmasi?</label>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
                                                                 data-dismiss="modal">Close</button>
                                                                 <button type="submit"
-                                                                    class="btn btn-danger">Update</button>
+                                                                    class="btn btn-danger">KOnfirmasi</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal fade" id="modalTolak<?php echo $id_transaksi; ?>" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Tolak
+                                                            Pembayaran?</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body upload-form-container">
+                                                        <form action="page.php?mod=reject-pesan" method="post">
+                                                            <div class="modal-body">
+                                                                <input class="form-control" type="hidden" name="id_transaksi" value="<?php echo $id_transaksi; ?>">
+                                                                <label for="text" class="form-text">Apakah anda yakin untuk Menolak pesanan ini?</label>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close</button>
+                                                                <button type="submit"
+                                                                    class="btn btn-danger">Tolak</button>
                                                             </div>
                                                         </form>
                                                     </div>
